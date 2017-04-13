@@ -84,11 +84,11 @@ module.exports = class VoiceManager {
 		}
 	}
 
-	leaveVoice(voiceChannel) {
+	leaveVoice(voiceConnection) {
 		winston.info(oneLine`
 			[SHARD: ${this.client.shard.id}] REMOVED VOICE CONNECTION:
-			For guild ${voiceChannel.guild.name} (${voiceChannel.guild.id})
+			For guild ${voiceConnection.channel.guild.name} (${voiceConnection.channel.guild.id})
 		`);
-		voiceChannel.disconnect();
+		voiceConnection.disconnect();
 	}
 };
