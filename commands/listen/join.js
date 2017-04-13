@@ -7,7 +7,8 @@ module.exports = class JoinCommand extends Command {
 			aliases: ['j'],
 			group: 'listen',
 			memberName: 'join',
-			description: 'Make the bot join your voice channel.'
+			description: 'Make the bot join your voice channel.',
+			guildOnly: true
 		});
 	}
 

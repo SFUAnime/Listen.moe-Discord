@@ -9,6 +9,7 @@ module.exports = class IgnoreCommand extends Command {
 			group: 'util',
 			memberName: 'ignore',
 			description: 'Make the bot ignore all commands in a specific channel',
+			guildOnly: true,
 
 			args: [
 				{

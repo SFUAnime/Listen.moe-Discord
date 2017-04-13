@@ -7,7 +7,8 @@ module.exports = class LeaveCommand extends Command {
 			aliases: ['l'],
 			group: 'listen',
 			memberName: 'leave',
-			description: 'Make the bot leave the voice channel.'
+			description: 'Make the bot leave the voice channel.',
+			guildOnly: true
 		});
 	}
 

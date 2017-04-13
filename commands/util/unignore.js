@@ -7,6 +7,7 @@ module.exports = class UnignoreCommand extends Command {
 			group: 'util',
 			memberName: 'unignore',
 			description: 'Make the bot stop ignoring a specific channel.',
+			guildOnly: true,
 
 			args: [
 				{
