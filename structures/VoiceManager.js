@@ -15,7 +15,7 @@ module.exports = class VoiceManager {
 		for (const vc of this.client.voiceConnections.values()) {
 			const vcListeners = vc.channel.members.filter(me => !(me.user.bot || me.selfDeaf || me.deaf)).size;
 			if (vcListeners || radioChannels.includes(vc.channel.id)) continue;
-			this.leaveVoice(vc.channel);
+			this.leaveVoice(vc);
 			this.client.provider.remove(vc.channel.guild.id, 'voiceChannel');
 		}
 	}
