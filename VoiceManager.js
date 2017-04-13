@@ -12,8 +12,6 @@ module.exports = class VoiceManager {
 	async setupGuilds() {
 		const rows = await this.client.provider.db.all('SELECT CAST(guild as TEXT) as guild FROM settings');
 
-		console.log(rows);
-
 		/* eslint-disable no-await-in-loop, max-len, id-length */
 		for (const { guild: guildID } of rows) {
 			const allGuildIDs = (await this.client.shard.broadcastEval('this.guilds.keyArray()')).reduce((prev, next) => prev.concat(next));

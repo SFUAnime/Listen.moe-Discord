@@ -1,38 +1,21 @@
 global.Promise = require('bluebird');
 
-const { CommandoClient, FriendlyError, SQLiteProvider } = require('discord.js-commando');
+const { FriendlyError, SQLiteProvider } = require('discord.js-commando');
 const { oneLine, stripIndents } = require('common-tags');
-const https = require('https');
 const path = require('path');
 const sqlite = require('sqlite');
 const request = require('superagent');
 const winston = require('winston');
 
 const { owners, stream, twitchClientID } = require('./config');
-const VoiceManager = require('./VoiceManager');
-const WebsocketManager = require('./WebsocketManager');
+const ListenMoeClient = require('./ListenMoeClient');
 
-const client = new CommandoClient({
+const client = new ListenMoeClient({
 	owner: owners,
 	commandPrefix: '~~',
 	unknownCommandResponse: false,
-	disableEveryone: true
-});
-
-function getStream() {
-	return new Promise(resolve => https.get(stream, res => resolve(res))
-		.on('error', () => process.exit(1)));
-}
-
-getStream().then(res => {
-	const broadcast = client.createVoiceBroadcast();
-	broadcast.playStream(res)
-		.on('error', err => {
-			winston.error(`[SHARD: ${client.shard.id}] PLAYSTREAM ERROR VOICE CONNECTION: ${err.stack}`);
-		});
-
-	client.voiceManager = new VoiceManager(client, broadcast);
-	client.voiceManager.setupGuilds();
+	disableEveryone: true,
+	stream
 });
 
 const streamCheck = setInterval(() => { // eslint-disable-line no-unused-vars
@@ -52,8 +35,6 @@ client.dispatcher.addInhibitor(msg => {
 });
 
 client.setProvider(sqlite.open(path.join(__dirname, 'settings.db')).then(db => new SQLiteProvider(db)));
-
-client.websocketManager = new WebsocketManager(client);
 
 client.on('error', winston.error)
 	.on('warn', winston.warn)
