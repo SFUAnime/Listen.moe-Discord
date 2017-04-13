@@ -8,7 +8,7 @@ module.exports = class VoiceManager {
 		this.client = client;
 		this.broadcast = broadcast;
 
-		this.purgeInteveral = setInterval(this.startPurge.bind(this), 60 * 60 * 1000);
+		this.purgeInteveral = setInterval(this.channelPurge.bind(this), 60 * 60 * 1000);
 	}
 
 	channelPurge() {
