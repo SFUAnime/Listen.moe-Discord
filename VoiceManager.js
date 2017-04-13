@@ -14,7 +14,7 @@ module.exports = class VoiceManager {
 	channelPurge() {
 		for (const vc of this.client.voiceConnections.values()) {
 			const vcListeners = vc.channel.members.filter(me => !(me.user.bot || me.selfDeaf || me.deaf)).size;
-			if (vcListeners || config.radioChannels.includes(vc.channel.id)) continue;
+			if (vcListeners || radioChannels.includes(vc.channel.id)) continue;
 			this.leaveVoice(vc.channel);
 			this.client.provider.remove(vc.channel.guild.id, 'voiceChannel');
 		}
