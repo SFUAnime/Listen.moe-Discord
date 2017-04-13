@@ -7,6 +7,17 @@ module.exports = class VoiceManager {
 	constructor(client, broadcast) {
 		this.client = client;
 		this.broadcast = broadcast;
+
+		this.purgeInteveral = setInterval(this.startPurge.bind(this), 60 * 60 * 1000);
+	}
+
+	channelPurge() {
+		for (const vc of this.client.voiceConnections.values()) {
+			const vcListeners = vc.channel.members.filter(me => !(me.user.bot || me.selfDeaf || me.deaf)).size;#
+			if (vcListeners || config.radioChannels.includes(vc.channel.id)) continue;
+			this.leaveVoice(vc.channel);
+			this.client.provider.remove(vc.channel.guild.id, 'voiceChannel');
+		}
 	}
 
 	async setupGuilds() {
