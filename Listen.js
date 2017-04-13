@@ -49,7 +49,7 @@ client.on('error', winston.error)
 	})
 	.on('ready', () => {
 		winston.info(oneLine`
-			[${client.shard.id}] Client ready...
+			[SHARD: ${client.shard.id}] Client ready...
 			Logged in as ${client.user.tag}
 			(${client.user.id})
 		`);
@@ -76,10 +76,10 @@ client.on('error', winston.error)
 		/* eslint-enable max-len */
 	})
 	.on('guildDelete', guild => client.provider.clear(guild.id))
-	.on('disconnect', () => winston.warn('Disconnected!'))
-	.on('reconnect', () => winston.warn('Reconnecting...'))
+	.on('disconnect', () => winston.warn(`[SHARD: ${client.shard.id}] Disconnected!`))
+	.on('reconnect', () => winston.warn(`[SHARD: ${client.shard.id}] Reconnecting...`))
 	.on('commandRun', (cmd, promise, msg, args) => {
-		winston.info(oneLine`[${client.shard.id}] ${msg.author.tag} (${msg.author.id})
+		winston.info(oneLine`[SHARD: ${client.shard.id}] ${msg.author.tag} (${msg.author.id})
 			> ${msg.guild ? `${msg.guild.name} (${msg.guild.id})` : 'DM'}
 			>> ${cmd.groupID}:${cmd.memberName}
 			${Object.values(args)[0] !== '' || [] ? `>>> ${Object.values(args)}` : ''}
@@ -87,30 +87,30 @@ client.on('error', winston.error)
 	})
 	.on('commandError', (cmd, err) => {
 		if (err instanceof FriendlyError) return;
-		winston.error(`[${client.shard.id}] Error in command ${cmd.groupID}:${cmd.memberName}`, err);
+		winston.error(`[SHARD: ${client.shard.id}] Error in command ${cmd.groupID}:${cmd.memberName}`, err);
 	})
 	.on('commandBlocked', (msg, reason) => {
 		winston.info(oneLine`
-			[${client.shard.id}] Command ${msg.command ? `${msg.command.groupID}:${msg.command.memberName}` : ''}
+			[SHARD: ${client.shard.id}] Command ${msg.command ? `${msg.command.groupID}:${msg.command.memberName}` : ''}
 			blocked; User ${msg.author.tag} (${msg.author.id}): ${reason}
 		`);
 	})
 	.on('commandPrefixChange', (guild, prefix) => {
 		winston.info(oneLine`
-			[${client.shard.id}] Prefix changed to ${prefix || 'the default'}
+			[SHARD: ${client.shard.id}] Prefix changed to ${prefix || 'the default'}
 			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
 		`);
 	})
 	.on('commandStatusChange', (guild, command, enabled) => {
 		winston.info(oneLine`
-			[${client.shard.id}] Command ${command.groupID}:${command.memberName}
+			[SHARD: ${client.shard.id}] Command ${command.groupID}:${command.memberName}
 			${enabled ? 'enabled' : 'disabled'}
 			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
 		`);
 	})
 	.on('groupStatusChange', (guild, group, enabled) => {
 		winston.info(oneLine`
-			[${client.shard.id}] Group ${group.id}
+			[SHARD: ${client.shard.id}] Group ${group.id}
 			${enabled ? 'enabled' : 'disabled'}
 			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
 		`);
