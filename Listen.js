@@ -33,18 +33,11 @@ client.on('error', winston.error)
 	.on('disconnect', () => winston.warn('Disconnected!'))
 	.on('reconnect', () => winston.warn('Reconnecting...'))
 	.on('commandRun', (cmd, promise, msg, args) => {
-		winston.info(oneLine`${msg.author.username}#${msg.author.discriminator} (${msg.author.id})
+		winston.info(oneLine`${msg.author.tag} (${msg.author.id})
 			> ${msg.guild ? `${msg.guild.name} (${msg.guild.id})` : 'DM'}
 			>> ${cmd.groupID}:${cmd.memberName}
 			${Object.values(args)[0] !== '' || [] ? `>>> ${Object.values(args)}` : ''}
 		`);
-	})
-	.on('unknownCommand', msg => {
-		if (msg.channel.type === 'dm') return;
-		if (msg.author.bot) return;
-
-		const args = { name: msg.content.split(client.commandPrefix)[1] };
-		client.registry.resolveCommand('tags:tag').run(msg, args);
 	})
 	.on('commandError', (cmd, err) => {
 		if (err instanceof FriendlyError) return;
@@ -53,7 +46,7 @@ client.on('error', winston.error)
 	.on('commandBlocked', (msg, reason) => {
 		winston.info(oneLine`
 			Command ${msg.command ? `${msg.command.groupID}:${msg.command.memberName}` : ''}
-			blocked; User ${msg.author.username}#${msg.author.discriminator} (${msg.author.id}): ${reason}
+			blocked; User ${msg.author.tag} (${msg.author.id}): ${reason}
 		`);
 	})
 	.on('commandPrefixChange', (guild, prefix) => {
