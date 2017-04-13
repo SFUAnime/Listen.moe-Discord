@@ -34,6 +34,12 @@ client.dispatcher.addInhibitor(msg => {
 	return ignoredChannels.includes(msg.channel.id);
 });
 
+client.dispatcher.addInhibitor(msg => {
+	const blacklist = client.provider.get('global', 'userBlacklist', []);
+	if (!blacklist.includes(msg.author.id)) return false;
+	return `User ${msg.author.username}#${msg.author.discriminator} (${msg.author.id}) has been blacklisted.`;
+});
+
 client.setProvider(sqlite.open(path.join(__dirname, 'settings.db')).then(db => new SQLiteProvider(db)));
 
 client.on('error', winston.error)
