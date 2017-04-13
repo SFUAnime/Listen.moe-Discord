@@ -36,7 +36,9 @@
     "erlpack": "hammerandchisel/erlpack",
     "node-opus": "^0.2.6",
     "sqlite": "^2.5.0",
-    "winston": "^2.3.1"
+    "superagent": "^3.5.2",
+    "winston": "^2.3.1",
+    "ws": "^2.2.3"
   },
   "devDependencies": {
     "eslint": "^3.19.0",
