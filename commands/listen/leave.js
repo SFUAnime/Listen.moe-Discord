@@ -23,7 +23,7 @@ module.exports = class LeaveCommand extends Command {
 		if (!voiceChannel) return msg.reply('you have to be in a voice channel to remove me, baka! ｡゜(｀Д´)゜｡');
 
 		this.client.provider.remove(msg.guild.id, 'voiceChannel');
-		this.client.voiceManager.leaveVoice(voiceChannel);
+		this.client.voiceManager.leaveVoice(msg.guild.voiceConnection);
 		return msg.say(`I will stop streaming to your server now, ${msg.author}-san. (-ω-、)`);
 	}
 };
