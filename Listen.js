@@ -7,11 +7,11 @@ const sqlite = require('sqlite');
 const request = require('superagent');
 const winston = require('winston');
 
-const { owners, stream, twitchClientID } = require('./config');
-const ListenMoeClient = require('./ListenMoeClient');
+const { owner, stream, twitchClientID } = require('./config');
+const ListenMoeClient = require('./structures/ListenMoeClient');
 
 const client = new ListenMoeClient({
-	owner: owners,
+	owner,
 	commandPrefix: '~~',
 	unknownCommandResponse: false,
 	disableEveryone: true,
@@ -37,7 +37,7 @@ client.dispatcher.addInhibitor(msg => {
 client.dispatcher.addInhibitor(msg => {
 	const blacklist = client.provider.get('global', 'userBlacklist', []);
 	if (!blacklist.includes(msg.author.id)) return false;
-	return `User ${msg.author.username}#${msg.author.discriminator} (${msg.author.id}) has been blacklisted.`;
+	return `User ${msg.author.tag} (${msg.author.id}) has been blacklisted.`;
 });
 
 client.setProvider(sqlite.open(path.join(__dirname, 'settings.db')).then(db => new SQLiteProvider(db)));

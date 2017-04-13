@@ -1,7 +1,7 @@
 const { oneLine } = require('common-tags');
 const winston = require('winston');
 
-const { radioChannels } = require('./config.json');
+const { radioChannels } = require('../config.json');
 
 module.exports = class VoiceManager {
 	constructor(client, broadcast) {
@@ -43,11 +43,10 @@ module.exports = class VoiceManager {
 
 	setupGuild(guildID) {
 		const voiceChannelID = this.client.provider.get(guildID, 'voiceChannel');
-		const guild = this.client.guilds.get(guildID);
-
 		if (!voiceChannelID) return;
-
+		const guild = this.client.guilds.get(guildID);
 		const voiceChannel = guild.channels.get(voiceChannelID);
+		if (!voiceChannel) return;
 		const vcListeners = voiceChannel.members.filter(me => !(me.user.bot || me.selfDeaf || me.deaf)).size;
 		if (!vcListeners && !radioChannels.includes(voiceChannel.id)) {
 			winston.info(oneLine`
@@ -68,7 +67,6 @@ module.exports = class VoiceManager {
 				[SHARD: ${this.client.shard.id}] ADDED VOICE CONNECTION:
 				(${voiceChannel.id}) for guild ${voiceChannel.guild.name} (${voiceChannel.guild.id})
 			`);
-
 			voiceConnection
 				.playBroadcast(this.broadcast)
 				.on('error', err => {

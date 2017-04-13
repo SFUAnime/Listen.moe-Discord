@@ -4,7 +4,7 @@ const path = require('path');
 const { token } = require('./config');
 
 const manager = new ShardingManager(path.join(__dirname, 'Listen.js'), {
-	token: token,
+	token,
 	totalShards: 6
 });
 

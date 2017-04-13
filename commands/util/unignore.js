@@ -12,7 +12,7 @@ module.exports = class UnignoreCommand extends Command {
 			args: [
 				{
 					key: 'channel',
-					prompt: 'Which channel would you like me to stop ignoring?',
+					prompt: 'which channel would you like me to stop ignoring?\n',
 					type: 'channel',
 					default: ''
 				}
@@ -26,7 +26,6 @@ module.exports = class UnignoreCommand extends Command {
 
 	run(msg, args) {
 		const channel = args.channel || msg.channel;
-
 		const ignored = this.client.provider.get('global', 'ignoredChannels', []);
 
 		if (!ignored.includes(channel.id)) return msg.reply('this channel isn\'t on the ignore list, gomen! <(￢0￢)>');

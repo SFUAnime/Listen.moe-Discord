@@ -12,7 +12,7 @@ module.exports = class StreamCommand extends Command {
 			args: [
 				{
 					key: 'message',
-					prompt: 'What message should the bot display?',
+					prompt: 'what message should the bot display?\n',
 					type: 'string',
 					default: ''
 				}
@@ -29,7 +29,6 @@ module.exports = class StreamCommand extends Command {
 
 		if (message === 'disable' || !message) {
 			if (!this.client.customStream) return msg.say('There was no custom streaming message enabled.');
-
 			this.client.customStream = false;
 			winston.info(`[SHARD: ${this.client.shard.id}] CUSTOM STREAMING MESSAGE REMOVED`);
 			return msg.say('Disabled the custom streaming message.');

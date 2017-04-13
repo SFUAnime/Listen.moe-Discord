@@ -14,7 +14,7 @@ module.exports = class IgnoreCommand extends Command {
 			args: [
 				{
 					key: 'channel',
-					prompt: 'Which channel would you like me to ignore?',
+					prompt: 'which channel would you like me to ignore?\n',
 					type: 'channel',
 					default: ''
 				}
@@ -28,7 +28,6 @@ module.exports = class IgnoreCommand extends Command {
 
 	run(msg, args) {
 		const channel = args.channel || msg.channel;
-
 		const ignored = this.client.provider.get('global', 'ignoredChannels', []);
 
 		if (ignored.includes(channel.id)) return msg.reply('this channel is already on the ignore list, baka! ｡゜(｀Д´)゜｡');

@@ -11,7 +11,7 @@ module.exports = class NowPlayingCommand extends Command {
 		});
 	}
 
-	async run(msg) {
+	run(msg) {
 		const { radioInfo } = this.client;
 
 		const nowplaying = `${radioInfo.artistName ? `${radioInfo.artistName} - ` : ''}${radioInfo.songName}`;
