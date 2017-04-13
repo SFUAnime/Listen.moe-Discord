@@ -28,7 +28,7 @@ module.exports = class IgnoreCommand extends Command {
 
 	run(msg, args) {
 		const channel = args.channel || msg.channel;
-		const ignored = this.client.provider.get('global', 'ignoredChannels', []);
+		const ignored = msg.guild.settings.get('ignoredChannels', []);
 
 		if (ignored.includes(channel.id)) return msg.reply('this channel is already on the ignore list, baka! ｡゜(｀Д´)゜｡');
 
@@ -37,7 +37,7 @@ module.exports = class IgnoreCommand extends Command {
 			[SHARD: ${this.client.shard.id}] CHANNEL IGNORE:
 			(${channel.id}) ON GUILD ${msg.guild.name} (${msg.guild.id})
 		`);
-		this.client.provider.set('global', 'ignoredChannels', ignored);
+		msg.guild.settings.set('ignoredChannels', ignored);
 		return msg.reply('gotcha! I\'m going to ignore this channel now. (￣▽￣)');
 	}
 };

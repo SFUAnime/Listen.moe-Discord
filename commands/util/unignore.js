@@ -26,13 +26,13 @@ module.exports = class UnignoreCommand extends Command {
 
 	run(msg, args) {
 		const channel = args.channel || msg.channel;
-		const ignored = this.client.provider.get('global', 'ignoredChannels', []);
+		const ignored = msg.guild.settings.get('ignoredChannels', []);
 
 		if (!ignored.includes(channel.id)) return msg.reply('this channel isn\'t on the ignore list, gomen! <(￢0￢)>');
 
 		const index = ignored.indexOf(channel.id);
 		ignored.splice(index, 1);
-		this.client.provider.set('global', 'ignoredChannels', ignored);
+		msg.guild.settings.set('ignoredChannels', ignored);
 		return msg.reply(`I'm baaack!  ＼(≧▽≦)／ (not going to ignore ${channel} anymore).`);
 	}
 };
