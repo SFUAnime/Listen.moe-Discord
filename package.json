@@ -1,0 +1,46 @@
+{
+  "name": "listen.moe",
+  "version": "0.1.0",
+  "description": "The official discord bot that streams to your server.",
+  "license": "MIT",
+  "author": "iCrawl",
+  "contributors": [{ "name": "vzwGrey" }],
+  "scripts": {
+    "test": "eslint . silent"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WeebDev/listen.moe.git"
+  },
+  "bugs": {
+    "url": "https://github.com/WeebDev/listen.moe/issues"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "listen-moe",
+    "listen",
+    "music"
+  ],
+  "homepage": "https://github.com/WeebDev/listen.moe#readme",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "bufferutil": "^3.0.0",
+    "common-tags": "^1.4.0",
+    "discord.js": "hydrabolt/discord.js",
+    "erlpack": "hammerandchisel/erlpack",
+    "node-opus": "^0.2.6",
+    "sqlite": "^2.5.0",
+    "winston": "^2.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-aqua": "^1.1.0"
+  },
+  "eslintConfig": {
+    "extends": "aqua"
+  },
+  "engines": {
+    "node": ">=7.6.0"
+  }
+}
