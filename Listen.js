@@ -125,3 +125,7 @@ client.registry
 	.registerCommandsIn(path.join(__dirname, 'commands'));
 
 client.login();
+
+process.on('unhandledRejection', err => {
+	console.error(`Uncaught Promise Error: \n${err.stack}`);
+});
