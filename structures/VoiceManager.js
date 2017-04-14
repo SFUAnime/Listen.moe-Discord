@@ -23,7 +23,7 @@ module.exports = class VoiceManager {
 	async setupGuilds() {
 		const rows = await this.client.provider.db.all('SELECT CAST(guild as TEXT) as guild FROM settings');
 
-		/* eslint-disable no-await-in-loop, max-len, id-length */
+		/* eslint-disable no-await-in-loop, max-len */
 		for (const { guild: guildID } of rows) {
 			const allGuildIDs = (await this.client.shard.broadcastEval('this.guilds.keyArray()')).reduce((prev, next) => prev.concat(next));
 
@@ -35,10 +35,9 @@ module.exports = class VoiceManager {
 			if (!this.client.guilds.has(guildID)) continue;
 
 			this.setupGuild(guildID);
-
-			await new Promise(r => setTimeout(r, 1000));
+			await new Promise(resolve => setTimeout(resolve, 1000));
 		}
-		/* eslint-enable no-await-in-loop, max-len, id-length */
+		/* eslint-enable no-await-in-loop, max-len */
 	}
 
 	setupGuild(guildID) {
