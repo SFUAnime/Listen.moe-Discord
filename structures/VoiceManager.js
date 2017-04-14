@@ -1,6 +1,4 @@
 const { oneLine } = require('common-tags');
-const path = require('path');
-const sqlite = require('sqlite');
 const winston = require('winston');
 
 const { radioChannels } = require('../config.json');
@@ -23,8 +21,7 @@ module.exports = class VoiceManager {
 	}
 
 	async setupGuilds() {
-		const db = await sqlite.open(path.join(__dirname, '..', 'settings.db'));
-		const rows = await db.all('SELECT CAST(guild as TEXT) as guild FROM settings');
+		const rows = await this.client.provider.db.all('SELECT CAST(guild as TEXT) as guild FROM settings');
 
 		/* eslint-disable no-await-in-loop, max-len */
 		for (const { guild: guildID } of rows) {
