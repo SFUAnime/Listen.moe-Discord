@@ -3,9 +3,6 @@ const path = require('path');
 
 const { token } = require('./config');
 
-const manager = new ShardingManager(path.join(__dirname, 'Listen.js'), {
-	token,
-	totalShards: 6
-});
+const manager = new ShardingManager(path.join(__dirname, 'Listen.js'), { token });
 
-manager.spawn();
+manager.spawn(undefined, 1000);
