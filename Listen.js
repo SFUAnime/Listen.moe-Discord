@@ -30,7 +30,7 @@ const streamCheck = setInterval(() => { // eslint-disable-line no-unused-vars
 }, 30000);
 
 client.dispatcher.addInhibitor(msg => {
-	if (!msg.guild) return undefined;
+	if (!msg.guild) return false;
 	const ignoredChannels = msg.guild.settings.get('ignoredChannels', []);
 	return ignoredChannels.includes(msg.channel.id);
 });

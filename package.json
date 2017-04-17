@@ -1,5 +1,5 @@
 {
-  "name": "listen.moe",
+  "name": "listen.moe-discord",
   "version": "0.1.0",
   "description": "The official discord bot that streams to your server.",
   "license": "MIT",
@@ -12,10 +12,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/WeebDev/listen.moe.git"
+    "url": "git+https://github.com/WeebDev/listen.moe-discord.git"
   },
   "bugs": {
-    "url": "https://github.com/WeebDev/listen.moe/issues"
+    "url": "https://github.com/WeebDev/listen.moe-discord/issues"
   },
   "keywords": [
     "discord",
@@ -24,7 +24,7 @@
     "listen",
     "music"
   ],
-  "homepage": "https://github.com/WeebDev/listen.moe#readme",
+  "homepage": "https://github.com/WeebDev/listen.moe-discord#readme",
   "dependencies": {
     "bluebird": "^3.5.0",
     "bufferutil": "^3.0.0",
