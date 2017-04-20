@@ -7,7 +7,7 @@ module.exports = class MusicStatusCommand extends Command {
 	constructor(client) {
 		super(client, {
 			name: 'status',
-			aliases: ['song', 'playing', 'current-song', 'now-playing'],
+			aliases: ['song', 'playing', 'current-song'],
 			group: 'music',
 			memberName: 'status',
 			description: 'Shows the current status of the music.',
