@@ -25,6 +25,9 @@ module.exports = class ListenMoeClient extends CommandoClient {
 		this.database = database.db;
 		this.redis = redis.db;
 
+		database.start();
+		redis.start();
+
 		getStream(options.stream).then(res => {
 			const broadcast = this.createVoiceBroadcast();
 			broadcast.playStream(res)
