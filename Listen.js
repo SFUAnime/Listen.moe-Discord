@@ -173,6 +173,7 @@ client.on('error', winston.error)
 client.registry
 	.registerGroups([
 		['listen', 'Listen.moe'],
+		['music', 'Music'],
 		['economy', 'Economy'],
 		['social', 'Social'],
 		['util', 'Utility']
