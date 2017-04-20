@@ -21,9 +21,7 @@ module.exports = class ListenMoeClient extends CommandoClient {
 		getStream(options.stream).then(res => {
 			const broadcast = this.createVoiceBroadcast();
 			broadcast.playStream(res)
-				.on('error', err => {
-					winston.error(`[SHARD: ${this.shard.id}] PLAYSTREAM ERROR VOICE CONNECTION: ${err.stack}`);
-				});
+				.on('error', err => winston.error(`[SHARD: ${this.shard.id}] PLAYSTREAM ERROR VOICE CONNECTION: ${err.stack}`));
 
 			this.voiceManager = new VoiceManager(this, broadcast);
 			this.voiceManager.setupGuilds();

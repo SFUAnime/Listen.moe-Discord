@@ -35,11 +35,30 @@ module.exports = class StatsCommand extends Command {
 			title: 'LISTEN.moe (Click here to add the radio bot to your server)',
 			url: 'https://discordapp.com/oauth2/authorize?&client_id=222167140004790273&scope=bot&permissions=36702208',
 			fields: [
-				{ name: 'Now playing', value: song },
-				{ name: 'Radio Listeners', value: radioInfo.listeners, inline: true },
-				{ name: 'Discord Listeners', value: radioInfo.discordListeners, inline: true },
-				{ name: 'Servers', value: guildsAmount, inline: true },
-				{ name: 'Voice Channels', value: voiceConnectionsAmount, inline: true }
+				{
+					name: 'Now playing',
+					value: song
+				},
+				{
+					name: 'Radio Listeners',
+					value: radioInfo.listeners,
+					inline: true
+				},
+				{
+					name: 'Discord Listeners',
+					value: radioInfo.discordListeners,
+					inline: true
+				},
+				{
+					name: 'Servers',
+					value: guildsAmount,
+					inline: true
+				},
+				{
+					name: 'Voice Channels',
+					value: voiceConnectionsAmount,
+					inline: true
+				}
 			],
 			timestamp: new Date(),
 			thumbnail: { url: 'http://i.imgur.com/Jfz6qak.png' }

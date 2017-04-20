@@ -13,10 +13,10 @@ module.exports = class WebsocketManager {
 		if (this.ws) this.ws.removeAllListeners();
 		try {
 			this.ws = new Websocket(websocket);
-			winston.info(`[SHARD: ${this.client.shard.id}] WEBSOCKET: Connection A-OK!`);
+			winston.info(`[SHARD: ${this.client.shard.id}] LISTEN.MOE WEBSOCKET: Connection A-OK!`);
 		} catch (error) {
-			winston.error(`[SHARD: ${this.client.shard.id}] WEBSOCKET: Failed to connect! ${error}`);
-			setTimeout(this.connect.bind(this), 3000);
+			winston.error(`[SHARD: ${this.client.shard.id}] LISTEN.MOE WEBSOCKET: Failed to connect! ${error}`);
+			setTimeout(this.connect.bind(this), 5000);
 		}
 
 		this.ws.on('message', this.onMessage.bind(this));
@@ -35,7 +35,6 @@ module.exports = class WebsocketManager {
 					.map(vc => vc.channel.members.filter(me => !(me.user.bot || me.selfDeaf || me.deaf)).size)
 					.reduce((sum, members) => sum + members, 0);
 			`)).reduce((prev, next) => prev + next, 0);
-
 			const parsed = JSON.parse(data);
 			this.client.radioInfo = {
 				songName: parsed.song_name,
@@ -51,8 +50,8 @@ module.exports = class WebsocketManager {
 	}
 
 	onClose() {
-		setTimeout(this.connect.bind(this), 3000);
-		winston.warn(`[SHARD: ${this.client.shard.id}] WEBSOCKET: Connection closed, reconnecting...`);
+		setTimeout(this.connect.bind(this), 5000);
+		winston.warn(`[SHARD: ${this.client.shard.id}] LISTEN.MOE WEBSOCKET: Connection closed, reconnecting...`);
 	}
 
 	async currentUsersAndGuildsGame() {
@@ -62,9 +61,7 @@ module.exports = class WebsocketManager {
 				const guildsAmount = results.reduce((prev, next) => prev + next, 0);
 				if (this.client.streaming) this.client.user.setGame(`for ${this.client.radioInfo.discordListeners} on ${guildsAmount} servers`, 'https://twitch.tv/listen_moe'); // eslint-disable-line max-len
 				else this.client.user.setGame(`for ${this.client.radioInfo.discordListeners} on ${guildsAmount} servers`);
-			} catch (error) {
-				// Do nothing
-			}
+			} catch (error) {} // eslint-disable-line no-empty
 		}
 		return setTimeout(this.currentSongGame.bind(this), 10000);
 	}

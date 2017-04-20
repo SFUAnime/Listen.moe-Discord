@@ -15,6 +15,7 @@ module.exports = class VoiceManager {
 		for (const vc of this.client.voiceConnections.values()) {
 			const vcListeners = vc.channel.members.filter(me => !(me.user.bot || me.selfDeaf || me.deaf)).size;
 			if (vcListeners || radioChannels.includes(vc.channel.id)) continue;
+			winston.info(`[SHARD: ${this.client.shard.id}] RUNNING CHANNEL PURGE`);
 			this.leaveVoice(vc);
 			this.client.provider.remove(vc.channel.guild.id, 'voiceChannel');
 		}
@@ -23,9 +24,10 @@ module.exports = class VoiceManager {
 	async setupGuilds() {
 		const rows = await this.client.provider.db.all('SELECT CAST(guild as TEXT) as guild FROM settings');
 
-		/* eslint-disable no-await-in-loop, max-len */
+		/* eslint-disable no-await-in-loop */
 		for (const { guild: guildID } of rows) {
-			const allGuildIDs = (await this.client.shard.broadcastEval('this.guilds.keyArray()')).reduce((prev, next) => prev.concat(next));
+			const allGuildIDs = (await this.client.shard.broadcastEval('this.guilds.keyArray()'))
+				.reduce((prev, next) => prev.concat(next));
 
 			if (!allGuildIDs.includes(guildID)) {
 				await this.client.provider.clear(guildID);
@@ -37,15 +39,17 @@ module.exports = class VoiceManager {
 			this.setupGuild(guildID);
 			await new Promise(resolve => setTimeout(resolve, 1000));
 		}
-		/* eslint-enable no-await-in-loop, max-len */
+		/* eslint-enable no-await-in-loop */
 	}
 
 	setupGuild(guildID) {
 		const voiceChannelID = this.client.provider.get(guildID, 'voiceChannel');
 		if (!voiceChannelID) return;
+
 		const guild = this.client.guilds.get(guildID);
 		const voiceChannel = guild.channels.get(voiceChannelID);
 		if (!voiceChannel) return;
+
 		const vcListeners = voiceChannel.members.filter(me => !(me.user.bot || me.selfDeaf || me.deaf)).size;
 		if (!vcListeners && !radioChannels.includes(voiceChannel.id)) {
 			winston.info(oneLine`
