@@ -47,13 +47,11 @@ client.on('error', winston.error)
 	.on('warn', winston.warn)
 	.once('ready', () => {
 		client.websocketManager.connect();
-		client.shard.broadcastEval(`
-			for (const channel of ${radioChannels}) {
-				if (!this.guilds.has(channel)) continue;
-				const voiceChannel = this.guilds.get(channel);
-				this.voiceManager.joinVoice(voiceChannel);
-			}
-		`);
+		for (const channel of radioChannels) {
+			if (!client.guilds.has(channel)) continue;
+			const voiceChannel = client.guilds.get(channel);
+			client.voiceManager.joinVoice(voiceChannel);
+		}
 	})
 	.on('ready', () => {
 		winston.info(oneLine`
