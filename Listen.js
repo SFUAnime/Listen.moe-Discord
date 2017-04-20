@@ -54,6 +54,7 @@ client.on('error', winston.error)
 	.on('warn', winston.warn)
 	.once('ready', () => {
 		client.websocketManager.connect();
+		Currency.leaderboard();
 	})
 	.on('ready', () => {
 		winston.info(oneLine`
