@@ -4,8 +4,8 @@ const winston = require('winston');
 
 const VoiceManager = require('./VoiceManager');
 const WebsocketManager = require('./WebsocketManager');
-const Database = require('./structures/PostgreSQL');
-const Redis = require('./structures/Redis');
+const Database = require('./PostgreSQL');
+const Redis = require('./Redis');
 
 function getStream(stream) {
 	return new Promise(resolve => https.get(stream, res => resolve(res))
