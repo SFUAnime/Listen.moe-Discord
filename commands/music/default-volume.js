@@ -1,6 +1,6 @@
 const { Command } = require('discord.js-commando');
 
-const config = require('../../settings');
+const config = require('../../config');
 
 module.exports = class DefaultVolumeCommand extends Command {
 	constructor(client) {

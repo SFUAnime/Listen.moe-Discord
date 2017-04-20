@@ -6,7 +6,7 @@ const winston = require('winston');
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
 
-const { defaultVolume, googleAPIKey, maxLength, maxSongs, passes, soundcloudID } = require('../../settings');
+const { defaultVolume, googleAPIKey, maxLength, maxSongs, passes, soundcloudID } = require('../../config');
 const Song = require('../../structures/Song');
 const { version } = require('../../package');
 

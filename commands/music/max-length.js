@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const { oneLine } = require('common-tags');
 
-const config = require('../../settings');
+const config = require('../../config');
 
 module.exports = class MaxLengthCommand extends Command {
 	constructor(client) {

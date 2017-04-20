@@ -1,7 +1,7 @@
 const { Command, util } = require('discord.js-commando');
 const { oneLine, stripIndents } = require('common-tags');
 
-const config = require('../../settings');
+const config = require('../../config');
 const Song = require('../../structures/Song');
 
 module.exports = class ViewQueueCommand extends Command {
