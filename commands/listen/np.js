@@ -13,7 +13,7 @@ module.exports = class NowPlayingCommand extends Command {
 	}
 
 	run(msg) {
-		const permission = msg.channel.permissionsFor(this.client);
+		const permission = msg.channel.permissionsFor(this.client.user);
 		if (!permission.hasPermission('EMBED_LINKS')) {
 			return msg.say(oneLine`
 				I don't have permissions to post embeds in this channel,
