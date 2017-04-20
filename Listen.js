@@ -7,7 +7,7 @@ const sqlite = require('sqlite');
 const request = require('superagent');
 const winston = require('winston');
 
-const { owner, stream, twitchClientID } = require('./config');
+const { owner, radioChannels, stream, twitchClientID } = require('./config');
 const ListenMoeClient = require('./structures/ListenMoeClient');
 
 const client = new ListenMoeClient({
@@ -47,6 +47,13 @@ client.on('error', winston.error)
 	.on('warn', winston.warn)
 	.once('ready', () => {
 		client.websocketManager.connect();
+		client.shard.broadcastEval(`
+			for (const channel of ${radioChannels}) {
+				if (!this.guilds.has(channel)) continue;
+				const voiceChannel = this.guilds.get(channel);
+				this.voiceManager.joinVoice(voiceChannel);
+			}
+		`);
 	})
 	.on('ready', () => {
 		winston.info(oneLine`
@@ -83,7 +90,7 @@ client.on('error', winston.error)
 		winston.info(oneLine`[SHARD: ${client.shard.id}] ${msg.author.tag} (${msg.author.id})
 			> ${msg.guild ? `${msg.guild.name} (${msg.guild.id})` : 'DM'}
 			>> ${cmd.groupID}:${cmd.memberName}
-			${Object.values(args)[0] !== '' || [] ? `>>> ${Object.values(args)}` : ''}
+			${Object.values(args)[0] !== '' || !Object.values(args).length ? `>>> ${Object.values(args)}` : ''}
 		`);
 	})
 	.on('commandError', (cmd, err) => {
