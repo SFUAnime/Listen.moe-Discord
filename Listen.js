@@ -18,6 +18,12 @@ const client = new ListenMoeClient({
 	stream
 });
 
+const Currency = require('./structures/currency/Currency');
+const Experience = require('./structures/currency/Experience');
+
+let earnedRecently = [];
+let gainedXPRecently = [];
+
 const streamCheck = setInterval(() => { // eslint-disable-line no-unused-vars
 	request
 		.get('https://api.twitch.tv/kraken/streams/?limit=1&channel=listen_moe')
@@ -60,6 +66,50 @@ client.on('error', winston.error)
 			client.voiceManager.joinVoice(voiceChannel);
 		}
 	})
+	.on('message', async message => {
+		if (message.channel.type === 'dm') return;
+		if (message.author.bot) return;
+		if (message.guild.id !== '216372140046286849') return;
+
+		const channelLocks = client.provider.get(message.guild.id, 'locks', []);
+		if (channelLocks.includes(message.channel.id)) return;
+		if (!earnedRecently.includes(message.author.id)) {
+			const hasImageAttachment = message.attachments.some(attachment =>
+				attachment.url.match(/\.(png|jpg|jpeg|gif|webp)$/)
+			);
+			const moneyEarned = hasImageAttachment
+				? Math.ceil(Math.random() * 7) + 5
+				: Math.ceil(Math.random() * 7) + 1;
+
+			Currency._changeBalance(message.author.id, moneyEarned);
+
+			earnedRecently.push(message.author.id);
+			setTimeout(() => {
+				const index = earnedRecently.indexOf(message.author.id);
+				earnedRecently.splice(index, 1);
+			}, 8000);
+		}
+
+		if (!gainedXPRecently.includes(message.author.id)) {
+			const xpEarned = Math.ceil(Math.random() * 9) + 3;
+			const oldLevel = await Experience.getLevel(message.author.id);
+
+			Experience.addExperience(message.author.id, xpEarned).then(async () => {
+				const newLevel = await Experience.getLevel(message.author.id);
+				if (newLevel > oldLevel) {
+					Currency._changeBalance(message.author.id, 100 * newLevel);
+				}
+			}).catch(err => null); // eslint-disable-line no-unused-vars, handle-callback-err
+
+			gainedXPRecently.push(message.author.id);
+			setTimeout(() => {
+				const index = gainedXPRecently.indexOf(message.author.id);
+				gainedXPRecently.splice(index, 1);
+			}, 60 * 1000);
+		}
+	})
+	.on('disconnect', () => winston.warn(`[SHARD: ${client.shard.id}] Disconnected!`))
+	.on('reconnect', () => winston.warn(`[SHARD: ${client.shard.id}] Reconnecting...`))
 	.on('guildCreate', guild => {
 		/* eslint-disable max-len */
 		guild.defaultChannel.sendEmbed({
@@ -82,8 +132,6 @@ client.on('error', winston.error)
 		/* eslint-enable max-len */
 	})
 	.on('guildDelete', guild => client.provider.clear(guild.id))
-	.on('disconnect', () => winston.warn(`[SHARD: ${client.shard.id}] Disconnected!`))
-	.on('reconnect', () => winston.warn(`[SHARD: ${client.shard.id}] Reconnecting...`))
 	.on('commandRun', (cmd, promise, msg, args) => {
 		winston.info(oneLine`[SHARD: ${client.shard.id}] ${msg.author.tag} (${msg.author.id})
 			> ${msg.guild ? `${msg.guild.name} (${msg.guild.id})` : 'DM'}
@@ -125,6 +173,8 @@ client.on('error', winston.error)
 client.registry
 	.registerGroups([
 		['listen', 'Listen.moe'],
+		['economy', 'Economy'],
+		['social', 'Social'],
 		['util', 'Utility']
 	])
 	.registerDefaults()
