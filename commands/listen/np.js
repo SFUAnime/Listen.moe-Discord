@@ -1,4 +1,5 @@
 const { Command } = require('discord.js-commando');
+const { oneLine } = require('common-tags');
 
 module.exports = class NowPlayingCommand extends Command {
 	constructor(client) {
@@ -12,6 +13,13 @@ module.exports = class NowPlayingCommand extends Command {
 	}
 
 	run(msg) {
+		const permission = msg.channel.permissionsFor(this.client);
+		if (!permission.hasPermission('EMBED_LINKS')) {
+			return msg.say(oneLine`
+				I don't have permissions to post embeds in this channel,
+				if you want me to display the now playing song, please enable it for me to do so
+			`);
+		}
 		const { radioInfo } = this.client;
 
 		const nowplaying = `${radioInfo.artistName ? `${radioInfo.artistName} - ` : ''}${radioInfo.songName}`;
@@ -23,7 +31,12 @@ module.exports = class NowPlayingCommand extends Command {
 
 		return msg.channel.sendEmbed({
 			color: 15473237,
-			fields: [{ name: 'Now playing', value: song }]
+			fields: [
+				{
+					name: 'Now playing',
+					value: song
+				}
+			]
 		});
 	}
 };
