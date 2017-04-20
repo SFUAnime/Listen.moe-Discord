@@ -6,6 +6,7 @@ const path = require('path');
 const sqlite = require('sqlite');
 const request = require('superagent');
 const winston = require('winston');
+require('moment-duration-format');
 
 const { owner, radioChannels, stream, twitchClientID } = require('./config');
 const ListenMoeClient = require('./structures/ListenMoeClient');
