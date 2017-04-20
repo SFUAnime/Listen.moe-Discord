@@ -17,7 +17,7 @@ module.exports = class NowPlayingCommand extends Command {
 		if (!permission.hasPermission('EMBED_LINKS')) {
 			return msg.say(oneLine`
 				I don't have permissions to post embeds in this channel,
-				if you want me to display the now playing song, please enable it for me to do so
+				if you want me to display the currently playing song, please enable it for me to do so!
 			`);
 		}
 		const { radioInfo } = this.client;
