@@ -47,11 +47,6 @@ client.on('error', winston.error)
 	.on('warn', winston.warn)
 	.once('ready', () => {
 		client.websocketManager.connect();
-		for (const channel of radioChannels) {
-			if (!client.guilds.has(channel)) continue;
-			const voiceChannel = client.guilds.get(channel);
-			client.voiceManager.joinVoice(voiceChannel);
-		}
 	})
 	.on('ready', () => {
 		winston.info(oneLine`
@@ -59,6 +54,11 @@ client.on('error', winston.error)
 			Logged in as ${client.user.tag}
 			(${client.user.id})
 		`);
+		for (const channel of radioChannels) {
+			if (!client.guilds.has(channel)) continue;
+			const voiceChannel = client.guilds.get(channel);
+			client.voiceManager.joinVoice(voiceChannel);
+		}
 	})
 	.on('guildCreate', guild => {
 		/* eslint-disable max-len */
