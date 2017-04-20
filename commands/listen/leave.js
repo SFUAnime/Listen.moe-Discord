@@ -19,9 +19,6 @@ module.exports = class LeaveCommand extends Command {
 	run(msg) {
 		if (!msg.guild.voiceConnection) return msg.reply('you didn\'t add me to a voice channel yet, baka! ｡゜(｀Д´)゜｡');
 
-		const { voiceChannel } = msg.member;
-		if (!voiceChannel) return msg.reply('you have to be in a voice channel to remove me, baka! ｡゜(｀Д´)゜｡');
-
 		this.client.provider.remove(msg.guild.id, 'voiceChannel');
 		this.client.voiceManager.leaveVoice(msg.guild.voiceConnection);
 		return msg.say(`I will stop streaming to your server now, ${msg.author}-san. (-ω-、)`);
