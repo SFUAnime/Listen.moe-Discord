@@ -4,7 +4,7 @@ const moment = require('moment');
 const Sequelize = require('sequelize');
 
 const Currency = require('../../structures/currency/Currency');
-const { paginationItems } = require('../../settings');
+const { paginationItems } = require('../../config');
 const Redis = require('../../structures/Redis');
 const UserProfile = require('../../models/UserProfile');
 
