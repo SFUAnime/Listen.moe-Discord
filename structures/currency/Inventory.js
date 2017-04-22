@@ -10,7 +10,7 @@ setInterval(async () => {
 
 	/* eslint-disable no-await-in-loop */
 	for (const id of ids) {
-		const user = UserProfile.findOne({ where: { userID: id } });
+		const user = await UserProfile.findOne({ where: { userID: id } });
 		if (!user) {
 			await UserProfile.create({
 				userID: id,

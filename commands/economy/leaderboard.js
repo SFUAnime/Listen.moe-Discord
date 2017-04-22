@@ -41,10 +41,6 @@ module.exports = class MoneyLeaderboardCommand extends Command {
 		});
 	}
 
-	hasPermission(msg) {
-		return msg.channel.type !== 'dm' && msg.guild.id === '216372140046286849';
-	}
-
 	async run(msg, args) {
 		const { page } = args;
 		const lastUpdate = await this.client.redis.getAsync('moneyleaderboardreset');

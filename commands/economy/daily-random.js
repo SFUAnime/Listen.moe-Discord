@@ -21,10 +21,6 @@ module.exports = class DailyRandomCommand extends Command {
 		});
 	}
 
-	hasPermission(msg) {
-		return msg.channel.type !== 'dm' && msg.guild.id === '216372140046286849';
-	}
-
 	async run(msg) {
 		const guild = await msg.guild.fetchMembers();
 		const member = guild.members.filter(mem => mem.presence.status === 'online' && !mem.user.bot).random();

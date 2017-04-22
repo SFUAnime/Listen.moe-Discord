@@ -21,10 +21,6 @@ module.exports = class BankInfoCommand extends Command {
 		});
 	}
 
-	hasPermission(msg) {
-		return msg.channel.type !== 'dm' && msg.guild.id === '216372140046286849';
-	}
-
 	async run(msg) {
 		const balance = await Currency.getBalance('bank');
 		const interestRate = await Bank.getInterestRate();

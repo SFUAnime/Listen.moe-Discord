@@ -36,10 +36,6 @@ module.exports = class DepositCommand extends Command {
 		});
 	}
 
-	hasPermission(msg) {
-		return msg.channel.type !== 'dm' && msg.guild.id === '216372140046286849';
-	}
-
 	async run(msg, args) {
 		const { donuts } = args;
 		if (donuts <= 0) return msg.reply(`you can't deposit 0 or less ${Currency.convert(0)}.`);

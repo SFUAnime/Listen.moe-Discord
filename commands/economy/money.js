@@ -30,10 +30,6 @@ module.exports = class MoneyInfoCommand extends Command {
 		});
 	}
 
-	hasPermission(msg) {
-		return msg.channel.type !== 'dm' && msg.guild.id === '216372140046286849';
-	}
-
 	async run(msg, args) {
 		const member = args.member || msg.author;
 		const money = await Currency.getBalance(member.id);

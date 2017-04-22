@@ -191,6 +191,7 @@ client.registry
 		['listen', 'Listen.moe'],
 		['music', 'Music'],
 		['economy', 'Economy'],
+		['games', 'Games'],
 		['social', 'Social'],
 		['util', 'Utility']
 	])
