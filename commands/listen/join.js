@@ -18,6 +18,8 @@ module.exports = class JoinCommand extends Command {
 
 		const { voiceChannel } = msg.member;
 		if (!voiceChannel) return msg.reply('you have to be in a voice channel to add me, baka! ｡゜(｀Д´)゜｡');
+		if (!voiceChannel.joinable) return msg.reply('I don\'t have permissions to join this voice channel, baka! ｡゜(｀Д´)゜｡'); // eslint-disable-line max-len
+		if (!voiceChannel.speakable) return msg.reply('I don\'t have permissions to speak in this voice channel, baka! ｡゜(｀Д´)゜｡'); // eslint-disable-line max-len
 
 		this.client.provider.set(msg.guild.id, 'voiceChannel', voiceChannel.id);
 		this.client.voiceManager.joinVoice(voiceChannel);

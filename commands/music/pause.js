@@ -17,7 +17,7 @@ module.exports = class PauseSongCommand extends Command {
 	}
 
 	hasPermission(msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
+		return this.client.isOwner(msg.author);
 	}
 
 	run(msg) {
