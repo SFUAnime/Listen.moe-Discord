@@ -48,6 +48,17 @@ client.dispatcher.addInhibitor(msg => {
 	return `User ${msg.author.tag} (${msg.author.id}) has been blacklisted.`;
 });
 
+client.dispatcher(msg => {
+	if (msg.guild.id !== '216372140046286849' && ['social', 'economy'].includes(msg.command.group.name)) {
+		return [
+			`[SHARD: ${client.shard.id}] ${msg.author.tag} tried to use command from group ${msg.command.group.name}`,
+			msg.reply('The command you were trying to use is only available on the official Listen.moe server.')
+		];
+	}
+
+	return false;
+});
+
 client.setProvider(sqlite.open(path.join(__dirname, 'settings.db')).then(db => new SQLiteProvider(db)));
 
 client.on('error', winston.error)
