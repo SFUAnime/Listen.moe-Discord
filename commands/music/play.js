@@ -37,7 +37,7 @@ module.exports = class PlaySongCommand extends Command {
 	}
 
 	hasPermission(msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
+		return this.client.isOwner(msg.author);
 	}
 
 	async run(msg, args) {
