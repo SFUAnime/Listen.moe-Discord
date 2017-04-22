@@ -36,7 +36,9 @@ module.exports = class StreamCommand extends Command {
 
 		this.client.customStream = true;
 		winston.info(`[SHARD: ${this.client.shard.id}] CUSTOM STREAMING MESSAGE SET TO "${message}"`);
-		this.client.user.setGame(message, 'https://twitch.tv/listen_moe');
+		this.client.shard.broadcastEval(`
+			this.user.setGame('${message}', 'https://twitch.tv/listen_moe');
+		`);
 		return msg.say(`Custom streaming message set to "${message}".`);
 	}
 };
