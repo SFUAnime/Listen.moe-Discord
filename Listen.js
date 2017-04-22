@@ -45,7 +45,7 @@ client.dispatcher.addInhibitor(msg => {
 client.dispatcher.addInhibitor(msg => {
 	const blacklist = client.provider.get('global', 'userBlacklist', []);
 	if (!blacklist.includes(msg.author.id)) return false;
-	return `User ${msg.author.tag} (${msg.author.id}) has been blacklisted.`;
+	return `[SHARD: ${client.shard.id}] ${msg.author.tag} (${msg.author.id}) has been blacklisted.`;
 });
 
 client.dispatcher(msg => {
@@ -126,7 +126,7 @@ client.on('error', winston.error)
 	.on('guildCreate', guild => {
 		/* eslint-disable max-len */
 		guild.defaultChannel.sendEmbed({
-			description: stripIndents`**LISTEN.moe discord bot by Crawl, vzwGrey, Anon & Kana**
+			description: stripIndents`**LISTEN.moe discord bot by Crawl & vzwGrey**
 				**Usage:**
 				After adding me to your server, join a voice channel and type \`~~join\` to bind me to that voice channel.
 				Keep in mind that you need to have the \`Manage Server\` permission to use this command.
