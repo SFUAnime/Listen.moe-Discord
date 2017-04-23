@@ -4,11 +4,10 @@ const { FriendlyError, SQLiteProvider } = require('discord.js-commando');
 const { oneLine, stripIndents } = require('common-tags');
 const path = require('path');
 const sqlite = require('sqlite');
-const request = require('superagent');
 const winston = require('winston');
 require('moment-duration-format');
 
-const { owner, radioChannels, stream, twitchClientID } = require('./config');
+const { owner, radioChannels, stream } = require('./config');
 const ListenMoeClient = require('./structures/ListenMoeClient');
 
 const client = new ListenMoeClient({
@@ -24,17 +23,6 @@ const Experience = require('./structures/currency/Experience');
 
 let earnedRecently = [];
 let gainedXPRecently = [];
-
-const streamCheck = setInterval(() => { // eslint-disable-line no-unused-vars
-	request
-		.get('https://api.twitch.tv/kraken/streams/?limit=1&channel=listen_moe')
-		.set('Accept', 'application/vnd.twitchtv.v3+json')
-		.set('Client-ID', twitchClientID)
-		.end((err, res) => {
-			if (err || !res.streams) client.streaming = false;
-			else client.streaming = true;
-		});
-}, 30000);
 
 client.dispatcher.addInhibitor(msg => {
 	if (!msg.guild) return false;
@@ -203,5 +191,5 @@ client.registry
 client.login();
 
 process.on('unhandledRejection', err => {
-	console.error(`Uncaught Promise Error: \n${err.stack}`);
+	winston.error(`Uncaught Promise Error: \n${err.stack}`);
 });

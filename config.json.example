@@ -10,6 +10,5 @@
 	"radioChannels": [
 		"IDs of the channels the bot should never leave",
 		"You can put multiple IDs here"
-	],
-	"twitchClientID": ""
+	]
 }
