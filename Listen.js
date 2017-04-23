@@ -49,6 +49,7 @@ client.dispatcher.addInhibitor(msg => {
 });
 
 client.dispatcher.addInhibitor(msg => {
+	console.log(msg);
 	if (
 		msg.channel.type === 'dm'
 		|| (msg.guild.id !== '216372140046286849' && ['social', 'economy', 'games'].includes(msg.command.group.name))
