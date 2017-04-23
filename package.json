@@ -2,15 +2,19 @@
   "name": "listen.moe-discord",
   "version": "0.1.0",
   "description": "The official discord bot that streams to your server.",
-  "license": "MIT",
-  "author": "iCrawl",
+  "main": "Listen.js",
+  "author": {
+    "name": "iCrawl",
+    "email": "icrawltogo@gmail.com"
+  },
   "contributors": [
     {
       "name": "vzwGrey"
     }
   ],
+  "license": "MIT",
   "scripts": {
-    "test": "eslint . silent"
+    "test": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -53,7 +57,7 @@
   },
   "devDependencies": {
     "eslint": "^3.19.0",
-    "eslint-config-aqua": "^1.1.0"
+    "eslint-config-aqua": "^1.2.0"
   },
   "eslintConfig": {
     "extends": "aqua"
