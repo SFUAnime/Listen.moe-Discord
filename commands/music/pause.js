@@ -4,7 +4,6 @@ module.exports = class PauseSongCommand extends Command {
 	constructor(client) {
 		super(client, {
 			name: 'pause',
-			aliases: ['shh', 'shhh', 'shhhh', 'shhhhh'],
 			group: 'music',
 			memberName: 'pause',
 			description: 'Pauses the currently playing song.',
