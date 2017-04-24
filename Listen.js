@@ -116,7 +116,7 @@ client.on('error', winston.error)
 	})
 	.on('disconnect', () => winston.warn(`[SHARD: ${client.shard.id}] Disconnected!`))
 	.on('reconnect', () => winston.warn(`[SHARD: ${client.shard.id}] Reconnecting...`))
-	.on('guildCreate', guild => {
+	.on('guildCreate', guild =>
 		/* eslint-disable max-len */
 		guild.defaultChannel.sendEmbed({
 			description: stripIndents`**LISTEN.moe discord bot by Crawl & vzwGrey**
@@ -134,17 +134,17 @@ client.on('error', winston.error)
 				**\\~~prefix !** Changes the bot's prefix for this server. Prefixes cannot contain whitespace, letters, or numbers - anything else is fair game. It's recommended that you stick with the default prefix of ~~, but this command is provided in case you find conflicts with other bots.
 				For additional commands and help, please visit [Github](https://github.com/WeebDev/listen.moe-discord)`,
 			color: 15473237
-		});
+		})
 		/* eslint-enable max-len */
-	})
+	)
 	.on('guildDelete', guild => client.provider.clear(guild.id))
-	.on('commandRun', (cmd, promise, msg, args) => {
+	.on('commandRun', (cmd, promise, msg, args) =>
 		winston.info(oneLine`[SHARD: ${client.shard.id}] ${msg.author.tag} (${msg.author.id})
 			> ${msg.guild ? `${msg.guild.name} (${msg.guild.id})` : 'DM'}
 			>> ${cmd.groupID}:${cmd.memberName}
 			${Object.values(args)[0] !== '' || !Object.values(args).length ? `>>> ${Object.values(args)}` : ''}
-		`);
-	})
+		`)
+	)
 	.on('commandError', (cmd, err) => {
 		if (err instanceof FriendlyError) return;
 		winston.error(`[SHARD: ${client.shard.id}] Error in command ${cmd.groupID}:${cmd.memberName}`, err);
@@ -155,26 +155,26 @@ client.on('error', winston.error)
 			blocked; User ${msg.author.tag} (${msg.author.id}): ${reason}
 		`);
 	})
-	.on('commandPrefixChange', (guild, prefix) => {
+	.on('commandPrefixChange', (guild, prefix) =>
 		winston.info(oneLine`
 			[SHARD: ${client.shard.id}] Prefix changed to ${prefix || 'the default'}
 			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
-		`);
-	})
-	.on('commandStatusChange', (guild, command, enabled) => {
+		`)
+	)
+	.on('commandStatusChange', (guild, command, enabled) =>
 		winston.info(oneLine`
 			[SHARD: ${client.shard.id}] Command ${command.groupID}:${command.memberName}
 			${enabled ? 'enabled' : 'disabled'}
 			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
-		`);
-	})
-	.on('groupStatusChange', (guild, group, enabled) => {
+		`)
+	)
+	.on('groupStatusChange', (guild, group, enabled) =>
 		winston.info(oneLine`
 			[SHARD: ${client.shard.id}] Group ${group.id}
 			${enabled ? 'enabled' : 'disabled'}
 			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
-		`);
-	});
+		`)
+	);
 
 client.registry
 	.registerGroups([
@@ -190,6 +190,4 @@ client.registry
 
 client.login();
 
-process.on('unhandledRejection', err => {
-	winston.error(`Uncaught Promise Error: \n${err.stack}`);
-});
+process.on('unhandledRejection', err => winston.error(`Uncaught Promise Error: \n${err.stack}`));
