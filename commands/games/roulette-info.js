@@ -25,7 +25,7 @@ module.exports = class RouletteInfo extends Command {
 				To start a game or place a bet use \`roulette <${Currency.textPlural}> <space>\`
 
 				\`<${Currency.textPlural}>\` for the amount of ${Currency.textPlural} to bet.
-				Can only be 100, 200, 300, 400, 500, 1000, 2000 or 5000.
+				Can only be 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000, 4000, or 5000.
 
 				\`<space>\` is the space you want to bet on. Those should be written exactly as in the image below.
 

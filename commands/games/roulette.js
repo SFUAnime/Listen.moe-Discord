@@ -40,10 +40,12 @@ module.exports = class RouletteCommand extends Command {
 							`;
 						}
 
-						if (![100, 200, 300, 400, 500, 1000, 2000, 5000].includes(bet)) {
+						if (![100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000, 4000, 5000].includes(bet)) {
+							/* eslint-disable max-len */
 							return `
-								please choose \`100, 200, 300, 400, 500, 1000, 2000, or 5000\` for your bet.
+								please choose \`100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000, 4000, or 5000\` for your bet.
 							`;
+							/* eslint-enable max-len */
 						}
 
 						return true;
