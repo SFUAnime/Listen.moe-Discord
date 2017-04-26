@@ -34,7 +34,7 @@ module.exports = class DailyRandomCommand extends Command {
 			`);
 		}
 
-		Daily.receive(msg.author.id, member.id);
+		await Daily.receive(msg.author.id, member.id);
 
 		return msg.reply(oneLine`
 			${member.displayName}#${member.user.discriminator} (${member.id}) has successfully received your daily
