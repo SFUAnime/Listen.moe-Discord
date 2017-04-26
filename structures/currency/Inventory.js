@@ -56,16 +56,15 @@ class Inventory {
 		}
 	}
 
-	save() {
-		return redis.db.hsetAsync('inventory', this.user, JSON.stringify(this.content));
+	async save() {
+		await redis.db.hsetAsync('inventory', this.user, JSON.stringify(this.content));
 	}
 
 	static fetchInventory(user) {
-		return new Promise((resolve, reject) => {
-			redis.db.hgetAsync('inventory', user).then(content => {
-				resolve(new Inventory(user, JSON.parse(content)));
-			}).catch(reject);
-		});
+		return new Promise((resolve, reject) =>
+			redis.db.hgetAsync('inventory', user).then(content => resolve(new Inventory(user, JSON.parse(content))))
+				.catch(reject)
+		);
 	}
 }
 
