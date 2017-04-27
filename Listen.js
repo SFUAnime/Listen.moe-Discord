@@ -182,6 +182,7 @@ client.registry
 		['music', 'Music'],
 		['economy', 'Economy'],
 		['games', 'Games'],
+		['item', 'Items'],
 		['social', 'Social'],
 		['util', 'Utility']
 	])

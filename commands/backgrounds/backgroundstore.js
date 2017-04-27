@@ -6,9 +6,9 @@ const Store = require('../../structures/currency/BackgroundStore');
 module.exports = class StoreInfoCommand extends Command {
 	constructor(client) {
 		super(client, {
-			name: 'store',
+			name: 'background-store',
 			group: 'item',
-			memberName: 'store',
+			memberName: 'backgroundstore',
 			description: 'Displays price of all items.',
 			display: 'Displays price of all items.',
 			throttling: {
