@@ -1,7 +1,7 @@
 const { Command, util } = require('discord.js-commando');
 
 const { paginationItems } = require('../../config');
-const Store = require('../../structures/currency/Store');
+const Store = require('../../structures/currency/BackgroundStore');
 
 module.exports = class StoreInfoCommand extends Command {
 	constructor(client) {

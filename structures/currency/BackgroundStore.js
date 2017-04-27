@@ -1,7 +1,7 @@
 const { Collection } = require('discord.js');
 
 const Item = require('../../models/Item');
-const StoreItem = require('./StoreItem');
+const StoreItem = require('./BackgroundItem');
 
 const backgroundStoreItems = new Collection();
 
