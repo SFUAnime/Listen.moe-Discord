@@ -15,7 +15,7 @@ module.exports = class VoiceManager {
 		for (const vc of this.client.voiceConnections.values()) {
 			const vcListeners = vc.channel.members.filter(me => !(me.user.bot || me.selfDeaf || me.deaf)).size;
 			if (vcListeners || radioChannels.includes(vc.channel.id)) continue;
-			winston.info(`[SHARD: ${this.client.shard.id}] RUNNING CHANNEL PURGE`);
+			winston.info(`[DISCORD][SHARD: ${this.client.shard.id}]: RUNNING CHANNEL PURGE`);
 			this.leaveVoice(vc);
 			this.client.provider.remove(vc.channel.guild.id, 'voiceChannel');
 		}
@@ -53,7 +53,7 @@ module.exports = class VoiceManager {
 		const vcListeners = voiceChannel.members.filter(me => !(me.user.bot || me.selfDeaf || me.deaf)).size;
 		if (!vcListeners && !radioChannels.includes(voiceChannel.id)) {
 			winston.info(oneLine`
-				[SHARD: ${this.client.shard.id}] REMOVED VOICE CONNECTION:
+				[DISCORD][SHARD: ${this.client.shard.id}]: REMOVED VOICE CONNECTION:
 				For guild ${guild.name} (${guild.id}) DUE TO NO LISTENERS
 			`);
 			this.client.provider.remove(guild, 'voiceChannel');
@@ -67,19 +67,21 @@ module.exports = class VoiceManager {
 		try {
 			const voiceConnection = await voiceChannel.join();
 			winston.info(oneLine`
-				[SHARD: ${this.client.shard.id}] ADDED VOICE CONNECTION:
+				[DISCORD][SHARD: ${this.client.shard.id}]: ADDED VOICE CONNECTION:
 				(${voiceChannel.id}) for guild ${voiceChannel.guild.name} (${voiceChannel.guild.id})
 			`);
 			voiceConnection
 				.playBroadcast(this.broadcast)
 				.on('error', err => {
-					winston.error(`[SHARD: ${this.client.shard.id}] PLAYBROADCAST ERROR VOICE CONNECTION: ${err.stack}`);
+					winston.error(oneLine`
+						[DISCORD][SHARD: ${this.client.shard.id}]: PLAYBROADCAST ERROR VOICE CONNECTION: ${err.stack}
+					`);
 					this.client.provider.remove(voiceChannel.guild.id, 'voiceChannel');
 					voiceConnection.disconnect();
 				});
 		} catch (error) {
 			winston.error(oneLine`
-				[SHARD: ${this.client.shard.id}] CATCH ERROR VOICE CONNECTION:
+				[DISCORD][SHARD: ${this.client.shard.id}]: CATCH ERROR VOICE CONNECTION:
 				(${voiceChannel.id}) for guild ${voiceChannel.guild.name} (${voiceChannel.guild.id}):
 				${error.stack}
 			`);
@@ -89,7 +91,7 @@ module.exports = class VoiceManager {
 
 	leaveVoice(voiceConnection) {
 		winston.info(oneLine`
-			[SHARD: ${this.client.shard.id}] REMOVED VOICE CONNECTION:
+			[DISCORD][SHARD: ${this.client.shard.id}]: REMOVED VOICE CONNECTION:
 			For guild ${voiceConnection.channel.guild.name} (${voiceConnection.channel.guild.id})
 		`);
 		voiceConnection.disconnect();

@@ -12,14 +12,13 @@ class Database {
 
 	start() {
 		database.authenticate()
-			.then(() => winston.info('Connection to database has been established successfully.'))
-			.then(() => winston.info('Synchronizing database...'))
+			.then(() => winston.info('[POSTGRES]: Connection to database has been established successfully.'))
+			.then(() => winston.info('[POSTGRES]: Synchronizing database...'))
 			.then(() => database.sync()
-				.then(() => winston.info('Synchronizing database done!'))
-				.catch(error => winston.error(`Error synchronizing the database: ${error}`))
+				.then(() => winston.info('[POSTGRES]: Synchronizing database done!'))
+				.catch(error => winston.error(`[POSTGRES]: Error synchronizing the database: ${error}`))
 			)
-			.then(() => winston.info('Ready to rock!'))
-			.catch(err => winston.error(`Unable to connect to the database: ${err}`));
+			.catch(err => winston.error(`[POSTGRES]: Unable to connect to the database: ${err}`));
 	}
 }
 

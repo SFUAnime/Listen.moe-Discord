@@ -33,7 +33,7 @@ client.dispatcher.addInhibitor(msg => {
 client.dispatcher.addInhibitor(msg => {
 	const blacklist = client.provider.get('global', 'userBlacklist', []);
 	if (!blacklist.includes(msg.author.id)) return false;
-	return `[SHARD: ${client.shard.id}] ${msg.author.tag} (${msg.author.id}) has been blacklisted.`;
+	return `[DISCORD][SHARD: ${client.shard.id}]: ${msg.author.tag} (${msg.author.id}) has been blacklisted.`;
 });
 
 client.dispatcher.addInhibitor(msg => {
@@ -41,7 +41,7 @@ client.dispatcher.addInhibitor(msg => {
 	const isRestrictedCommand = ['social', 'economy', 'games'].includes(msg.command.group.id);
 	if ((msg.channel.type === 'dm' || msg.guild.id !== '216372140046286849') && isRestrictedCommand) {
 		return [
-			`[SHARD: ${client.shard.id}] ${msg.author.tag} tried to use command from group ${msg.command.group.name}`,
+			`[DISCORD][SHARD: ${client.shard.id}]: ${msg.author.tag} tried to use command from group ${msg.command.group.name}`, // eslint-disable-line max-len
 			msg.reply('The command you were trying to use is only available on the official Listen.moe server.')
 		];
 	}
@@ -58,7 +58,7 @@ client.on('error', winston.error)
 	})
 	.on('ready', () => {
 		winston.info(oneLine`
-			[SHARD: ${client.shard.id}] Client ready...
+			[DISCORD][SHARD: ${client.shard.id}]: Client ready...
 			Logged in as ${client.user.tag}
 			(${client.user.id})
 		`);
@@ -110,8 +110,8 @@ client.on('error', winston.error)
 			}, 60 * 1000);
 		}
 	})
-	.on('disconnect', () => winston.warn(`[SHARD: ${client.shard.id}] Disconnected!`))
-	.on('reconnect', () => winston.warn(`[SHARD: ${client.shard.id}] Reconnecting...`))
+	.on('disconnect', () => winston.warn(`[DISCORD][SHARD: ${client.shard.id}]: Disconnected!`))
+	.on('reconnect', () => winston.warn(`[DISCORD][SHARD: ${client.shard.id}]: Reconnecting...`))
 	.on('guildCreate', guild =>
 		/* eslint-disable max-len */
 		guild.defaultChannel.sendEmbed({
@@ -135,38 +135,40 @@ client.on('error', winston.error)
 	)
 	.on('guildDelete', guild => client.provider.clear(guild.id))
 	.on('commandRun', (cmd, promise, msg, args) =>
-		winston.info(oneLine`[SHARD: ${client.shard.id}] ${msg.author.tag} (${msg.author.id})
+		winston.info(oneLine`[DISCORD][SHARD: ${client.shard.id}]: ${msg.author.tag} (${msg.author.id})
 			> ${msg.guild ? `${msg.guild.name} (${msg.guild.id})` : 'DM'}
 			>> ${cmd.groupID}:${cmd.memberName}
-			${Object.values(args)[0] !== '' || !Object.values(args).length ? `>>> ${Object.values(args)}` : ''}
+			${Object.values(args).length ? `>>> ${Object.values(args)}` : ''}
 		`)
 	)
 	.on('commandError', (cmd, err) => {
 		if (err instanceof FriendlyError) return;
-		winston.error(`[SHARD: ${client.shard.id}] Error in command ${cmd.groupID}:${cmd.memberName}`, err);
+		winston.error(`[DISCORD][SHARD: ${client.shard.id}]: Error in command ${cmd.groupID}:${cmd.memberName}`, err);
 	})
 	.on('commandBlocked', (msg, reason) => {
+		/* eslint-disable max-len */
 		winston.info(oneLine`
-			[SHARD: ${client.shard.id}] Command ${msg.command ? `${msg.command.groupID}:${msg.command.memberName}` : ''}
+			[DISCORD][SHARD: ${client.shard.id}]: Command ${msg.command ? `${msg.command.groupID}:${msg.command.memberName}` : ''}
 			blocked; User ${msg.author.tag} (${msg.author.id}): ${reason}
 		`);
+		/* eslint-disable max-len */
 	})
 	.on('commandPrefixChange', (guild, prefix) =>
 		winston.info(oneLine`
-			[SHARD: ${client.shard.id}] Prefix changed to ${prefix || 'the default'}
+			[DISCORD][SHARD: ${client.shard.id}]: Prefix changed to ${prefix || 'the default'}
 			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
 		`)
 	)
 	.on('commandStatusChange', (guild, command, enabled) =>
 		winston.info(oneLine`
-			[SHARD: ${client.shard.id}] Command ${command.groupID}:${command.memberName}
+			[DISCORD][SHARD: ${client.shard.id}]: Command ${command.groupID}:${command.memberName}
 			${enabled ? 'enabled' : 'disabled'}
 			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
 		`)
 	)
 	.on('groupStatusChange', (guild, group, enabled) =>
 		winston.info(oneLine`
-			[SHARD: ${client.shard.id}] Group ${group.id}
+			[DISCORD][SHARD: ${client.shard.id}]: Group ${group.id}
 			${enabled ? 'enabled' : 'disabled'}
 			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
 		`)

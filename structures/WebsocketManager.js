@@ -13,9 +13,9 @@ module.exports = class WebsocketManager {
 		if (this.ws) this.ws.removeAllListeners();
 		try {
 			this.ws = new Websocket(websocket);
-			winston.info(`[SHARD: ${this.client.shard.id}] LISTEN.MOE WEBSOCKET: Connection A-OK!`);
+			winston.info(`[LISTEN.MOE][SHARD: ${this.client.shard.id}]: Connection A-OK!`);
 		} catch (error) {
-			winston.error(`[SHARD: ${this.client.shard.id}] LISTEN.MOE WEBSOCKET: Failed to connect! ${error}`);
+			winston.error(`[LISTEN.MOE][SHARD: ${this.client.shard.id}]: Failed to connect! ${error}`);
 			setTimeout(this.connect.bind(this), 5000);
 		}
 
@@ -51,7 +51,7 @@ module.exports = class WebsocketManager {
 
 	onClose() {
 		setTimeout(this.connect.bind(this), 5000);
-		winston.warn(`[SHARD: ${this.client.shard.id}] LISTEN.MOE WEBSOCKET: Connection closed, reconnecting...`);
+		winston.warn(`[LISTEN.MOE][SHARD: ${this.client.shard.id}]: Connection closed, reconnecting...`);
 	}
 
 	async currentUsersAndGuildsGame() {
