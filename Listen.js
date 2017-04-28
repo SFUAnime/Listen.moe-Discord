@@ -38,7 +38,6 @@ client.dispatcher.addInhibitor(msg => {
 
 client.dispatcher.addInhibitor(msg => {
 	if (!msg.command) return false;
-
 	const isRestrictedCommand = ['social', 'economy', 'games'].includes(msg.command.group.name);
 	if ((msg.channel.type === 'dm' || msg.guild.id !== '216372140046286849') && isRestrictedCommand) {
 		return [
@@ -46,7 +45,6 @@ client.dispatcher.addInhibitor(msg => {
 			msg.reply('The command you were trying to use is only available on the official Listen.moe server.')
 		];
 	}
-
 	return false;
 });
 
