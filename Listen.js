@@ -38,11 +38,9 @@ client.dispatcher.addInhibitor(msg => {
 
 client.dispatcher.addInhibitor(msg => {
 	if (!msg.command) return false;
-	if (
-		msg.channel.type === 'dm'
-		|| (msg.guild.id !== '216372140046286849'
-			&& ['social', 'economy', 'games'].includes(msg.command.group.name))
-	) {
+
+	const isRestrictedCommand = ['social', 'economy', 'games'].includes(msg.command.group.name);
+	if ((msg.channel.type === 'dm' || msg.guild.id !== '216372140046286849') && isRestrictedCommand) {
 		return [
 			`[SHARD: ${client.shard.id}] ${msg.author.tag} tried to use command from group ${msg.command.group.name}`,
 			msg.reply('The command you were trying to use is only available on the official Listen.moe server.')
