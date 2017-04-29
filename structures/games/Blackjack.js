@@ -15,6 +15,7 @@ class Blackjack {
 	constructor(msg) {
 		this.guildID = msg.guild.id;
 		this.playerID = msg.author.id;
+		this.deck = [];
 
 		games.set(this.playerID, this);
 	}
