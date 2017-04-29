@@ -17,6 +17,7 @@ class Blackjack {
 		this.playerID = msg.author.id;
 		this.deck = [];
 
+		decks.set('216372140046286849', []);
 		games.set(this.playerID, this);
 	}
 
