@@ -108,6 +108,7 @@ class Blackjack {
 	}
 
 	static _shuffle(array) {
+		console.log("_shuffle array:" + array);
 		for (let i = array.length - 1; i > 0; i--) {
 			const j = Math.floor(Math.random() * (i + 1));
 			const temp = array[i];
@@ -115,6 +116,7 @@ class Blackjack {
 			array[j] = temp;
 		}
 
+		console.log("_shuffle array done: " + array);
 		return array;
 	}
 }
