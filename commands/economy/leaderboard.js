@@ -78,7 +78,7 @@ module.exports = class MoneyLeaderboardCommand extends Command {
 		);
 
 		await this.client.redis.setAsync('moneyleaderboard', JSON.stringify(money));
-		this.client.redis.expire('moneyleaderboard', 3600);
+		await this.client.redis.expireAsync('moneyleaderboard', 3600);
 
 		return JSON.stringify(money);
 	}
