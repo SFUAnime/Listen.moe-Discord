@@ -98,16 +98,18 @@ class Blackjack {
 	}
 
 	static _shuffle(array) {
-		const newArray = array.slice();
-		for (let i = array.length - 1; i > 0; i--) {
-			const j = Math.floor(Math.random() * (i + 1));
-			const temp = newArray[i];
-			newArray[i] = newArray[j];
-			newArray[j] = temp;
-		}
+		let random;
+		let temp;
+		let length = array.length;
+		let value = array.slice();
 
-		console.log("_shuffle array done: " + array);
-		return newArray;
+		while (length) {
+			random = Math.floor(Math.random() * length--);
+			temp = value[length];
+			value[length] = value[random];
+			value[random] = temp;
+		}
+		return value;
 	}
 }
 
