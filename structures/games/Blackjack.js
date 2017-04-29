@@ -28,17 +28,15 @@ class Blackjack {
 			if (decks.has(this.guildID) && decks.get(this.guildID).length !== 0) {
 				this.deck = decks.get(this.guildID);
 			} else {
-				this.deck = ['2♣', '3❤', '4♠', '6♠', '7♠', '2❤', 'A❤', '6❤', '8❤', 'J♦']; /*Blackjack._shuffle(DECK_TEMPLATE);*/
+				this.deck = Blackjack._shuffle(DECK_TEMPLATE);
 				decks.set(this.guildID, this.deck);
 			}
 		}
-		console.log("Before push: " + hand);
-		console.log("Before push deck: " + this.deck);
-		console.log("Before push global Decks: " + util.inspect(decks, { depth: null }));
 		hand.push(this.deck.pop());
-		console.log("After push: " + hand);
-		console.log("After push deck: " + this.deck);
-		console.log("After push global Decks: " + util.inspect(decks, { depth: null }));
+		console.log("hit hand: " + hand);
+		console.log("hit guild deck: " + this.deck);
+		console.log("hit global deck: " + util.inspect(decks, { depth: null }));
+
 		return hand;
 	}
 
@@ -55,6 +53,7 @@ class Blackjack {
 	}
 
 	static isSoft(hand) {
+		console.log("isSoft: " + hand);
 		let value = 0;
 		let aces = 0;
 
@@ -74,6 +73,7 @@ class Blackjack {
 	}
 
 	static handValue(hand) {
+		console.log("handValue: " + hand);
 		let value = 0;
 		let aces = 0;
 
@@ -93,6 +93,7 @@ class Blackjack {
 	}
 
 	static _cardValue(card) {
+		console.log("_cardValue: " + card);
 		const index = ranks.indexOf(card.slice(0, -1));
 		if (index === 0) return 11;
 
