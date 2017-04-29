@@ -15,8 +15,8 @@ class Blackjack {
 	constructor(msg) {
 		this.guildID = msg.guild.id;
 		this.playerID = msg.author.id;
+		this.deck = [];
 
-		decks.set('216372140046286849', []);
 		games.set(this.playerID, this);
 	}
 
@@ -98,18 +98,16 @@ class Blackjack {
 	}
 
 	static _shuffle(array) {
-		let random;
-		let temp;
-		let length = array.length;
-		let value = array.slice();
-
-		while (length) {
-			random = Math.floor(Math.random() * length--);
-			temp = value[length];
-			value[length] = value[random];
-			value[random] = temp;
+		const newArray = array.slice();
+		for (let i = array.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			const temp = newArray[i];
+			newArray[i] = newArray[j];
+			newArray[j] = temp;
 		}
-		return value;
+
+		console.log("_shuffle array done: " + array);
+		return newArray;
 	}
 }
 
