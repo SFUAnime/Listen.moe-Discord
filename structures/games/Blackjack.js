@@ -27,7 +27,7 @@ class Blackjack {
 			if (decks.has(this.guildID) && decks.get(this.guildID).length !== 0) {
 				this.deck = decks.get(this.guildID);
 			} else {
-				this.deck = ['2♣', '3❤']; /*Blackjack._shuffle(DECK_TEMPLATE);*/
+				this.deck = ['2♣', '3❤', '4♠', '6♠', '7♠', '2❤', 'A❤', '6❤', '8❤', 'J♦']; /*Blackjack._shuffle(DECK_TEMPLATE);*/
 				decks.set(this.guildID, this.deck);
 			}
 		}
