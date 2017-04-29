@@ -103,7 +103,6 @@ class Blackjack {
 			newArray[j] = temp;
 		}
 
-		console.log("_shuffle array done: " + array);
 		return newArray;
 	}
 }
