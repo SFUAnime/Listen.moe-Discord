@@ -60,7 +60,6 @@ class Blackjack {
 	}
 
 	static isSoft(hand) {
-		console.log("isSoft: " + hand);
 		let value = 0;
 		let aces = 0;
 
@@ -80,7 +79,6 @@ class Blackjack {
 	}
 
 	static handValue(hand) {
-		console.log("handValue: " + hand);
 		let value = 0;
 		let aces = 0;
 
