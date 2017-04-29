@@ -47,7 +47,6 @@ class Blackjack {
 		hand.push(this.deck.pop());
 		console.log("hit hand: " + hand);
 		console.log("hit guild deck: " + this.deck);
-		console.log("hit global deck: " + util.inspect(decks, { depth: null }));
 
 		return hand;
 	}
@@ -103,7 +102,6 @@ class Blackjack {
 	}
 
 	static _cardValue(card) {
-		console.log("_cardValue: " + card);
 		const index = ranks.indexOf(card.slice(0, -1));
 		if (index === 0) return 11;
 
