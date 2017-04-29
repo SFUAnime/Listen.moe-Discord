@@ -1,4 +1,3 @@
-const util = require('util');
 const decks = new Map();
 const games = new Map();
 
@@ -25,7 +24,7 @@ class Blackjack {
 	}
 
 	hit(hand) {
-		if (!this.deck || this.deck.length === 0) {
+		if (this.deck.length === 0) {
 			if (decks.has(this.guildID) && decks.get(this.guildID).length !== 0) {
 				this.deck = decks.get(this.guildID);
 			} else {
@@ -34,8 +33,6 @@ class Blackjack {
 			}
 		}
 		hand.push(this.deck.pop());
-		console.log("hit hand: " + hand);
-		console.log("hit guild deck: " + this.deck);
 
 		return hand;
 	}
