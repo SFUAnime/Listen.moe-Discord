@@ -27,9 +27,9 @@ class Blackjack {
 
 	hit(hand) {
 		console.log("!this.deck: " + !this.deck);
-		console.log("this.deck.length === 0" + this.deck.length === 0);
+		console.log("this.deck.length === 0: " + this.deck.length === 0);
 		console.log("deck: " + this.deck);
-		console.log("!this.deck || this.deck.length === 0" + !this.deck || this.deck.length === 0);
+		console.log("!this.deck || this.deck.length === 0: " + !this.deck || this.deck.length === 0);
 		if (!this.deck || this.deck.length === 0) {
 			console.log("decks.has(this.guildID): " + decks.has(this.guildID));
 			console.log("decks.get(this.guildID).length !== 0: " + decks.get(this.guildID).length !== 0);
