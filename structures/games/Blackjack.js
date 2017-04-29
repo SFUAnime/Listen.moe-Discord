@@ -1,3 +1,4 @@
+const util = require('util');
 const decks = new Map();
 const games = new Map();
 
@@ -33,11 +34,11 @@ class Blackjack {
 		}
 		console.log("Before push: " + hand);
 		console.log("Before push deck: " + this.deck);
-		console.log("Before push global Decks: " + decks);
+		console.log("Before push global Decks: " + util.inspect(decks, { depth: null }));
 		hand.push(this.deck.pop());
 		console.log("After push: " + hand);
 		console.log("After push deck: " + this.deck);
-		console.log("After push global Decks: " + decks);
+		console.log("After push global Decks: " + util.inspect(decks, { depth: null }));
 		return hand;
 	}
 
