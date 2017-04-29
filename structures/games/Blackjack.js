@@ -24,10 +24,17 @@ class Blackjack {
 	}
 
 	hit(hand) {
+		console.log("!this.deck: " + !this.deck);
+		console.log("this.deck.length === 0" + this.deck.length === 0);
+		console.log("deck: " + this.deck);
 		if (!this.deck || this.deck.length === 0) {
+			console.log("decks.has(this.guildID): " + decks.has(this.guildID));
+			console.log("decks.get(this.guildID).length !== 0: " + decks.get(this.guildID).length !== 0);
 			if (decks.has(this.guildID) && decks.get(this.guildID).length !== 0) {
+				console.log("decks.get(this.guildID).length !== 0");
 				this.deck = decks.get(this.guildID);
 			} else {
+				console.log("else");
 				this.deck = Blackjack._shuffle(DECK_TEMPLATE);
 				decks.set(this.guildID, this.deck);
 			}
