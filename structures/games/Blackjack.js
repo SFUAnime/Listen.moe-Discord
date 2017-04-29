@@ -7,7 +7,8 @@ const DECK_TEMPLATE = suits
 	.map(suit => ranks.concat(ranks)
 		.concat(ranks)
 		.concat(ranks)
-		.map(rank => rank + suit))
+		.map(rank => rank + suit)
+	)
 	.reduce((array, arr) => array.concat(arr));
 
 class Blackjack {
