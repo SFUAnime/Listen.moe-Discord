@@ -28,7 +28,9 @@ module.exports = class NowPlayingCommand extends Command {
 		const nowplaying = `${radioInfo.artistName ? `${radioInfo.artistName} - ` : ''}${radioInfo.songName}`;
 		const anime = radioInfo.animeName ? `Anime: ${radioInfo.animeName}` : '';
 		const requestedBy = radioInfo.requestedBy
-			? `Requested by: [${radioInfo.requestedBy}](https://forum.listen.moe/u/${radioInfo.requestedBy})`
+			? /\s/g.test(radioInfo.requestedBy)
+				? `**${radioInfo.requestedBy}**`
+			: `Requested by: [${radioInfo.requestedBy}](https://forum.listen.moe/u/${radioInfo.requestedBy})`
 			: '';
 		const song = `${nowplaying}\n\n${anime}\n${requestedBy}`;
 
