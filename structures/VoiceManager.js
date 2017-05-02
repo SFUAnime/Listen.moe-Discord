@@ -22,7 +22,7 @@ module.exports = class VoiceManager {
 	}
 
 	async setupGuilds() {
-		const rows = await this.client.provider.db.model.findAll({ attributes: ['guild'] });
+		const rows = await this.client.provider.model.findAll({ attributes: ['guild'] });
 
 		/* eslint-disable no-await-in-loop */
 		for (const { guild: guildID } of rows) {
