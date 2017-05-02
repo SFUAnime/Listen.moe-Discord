@@ -1,14 +1,14 @@
 global.Promise = require('bluebird');
 
-const { FriendlyError, SQLiteProvider } = require('discord.js-commando');
+const { FriendlyError } = require('discord.js-commando');
 const { oneLine, stripIndents } = require('common-tags');
 const path = require('path');
-const sqlite = require('sqlite');
 const winston = require('winston');
 require('moment-duration-format');
 
 const { owner, radioChannels, stream } = require('./config');
 const ListenMoeClient = require('./structures/ListenMoeClient');
+const SequelizeProvider = require('./providers/Sequelize');
 
 const client = new ListenMoeClient({
 	owner,
@@ -48,7 +48,7 @@ client.dispatcher.addInhibitor(msg => {
 	return false;
 });
 
-client.setProvider(sqlite.open(path.join(__dirname, 'settings.db')).then(db => new SQLiteProvider(db)));
+client.setProvider(new SequelizeProvider(client.database));
 
 client.on('error', winston.error)
 	.on('warn', winston.warn)
