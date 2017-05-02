@@ -6,7 +6,7 @@ const path = require('path');
 const winston = require('winston');
 require('moment-duration-format');
 
-const { COMMAND_PREFIX, OWNERS, RADIO_CHANNELS, STREAM } = require('./config');
+const { COMMAND_PREFIX, OWNERS, RADIO_CHANNELS, STREAM } = process.env;
 const ListenMoeClient = require('./structures/ListenMoeClient');
 const SequelizeProvider = require('./providers/Sequelize');
 
