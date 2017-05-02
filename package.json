@@ -48,6 +48,7 @@
     "request-promise": "^4.2.0",
     "sequelize": "3.30.4",
     "simple-youtube-api": "^2.1.0",
+    "tsubaki": "^1.1.0",
     "winston": "^2.3.1",
     "ws": "^2.3.1",
     "ytdl-core": "^0.13.2"
