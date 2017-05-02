@@ -1,18 +1,20 @@
-const bluebird = require('bluebird');
+const { promisifyAll } = require('tsubaki');
 const redisClient = require('redis');
 const winston = require('winston');
 
-bluebird.promisifyAll(redisClient.RedisClient.prototype);
-bluebird.promisifyAll(redisClient.Multi.prototype);
+const { REDIS } = process.env;
 
-const redis = redisClient.createClient({ db: 3 });
+promisifyAll(redisClient.RedisClient.prototype);
+promisifyAll(redisClient.Multi.prototype);
+
+const redis = redisClient.createClient({ host: REDIS, port: 6379 });
 
 class Redis {
-	get db() {
+	static get db() {
 		return redis;
 	}
 
-	start() {
+	static start() {
 		redis.on('error', error => winston.error(`[REDIS]: Encountered error: \n${error}`))
 			.on('reconnecting', () => winston.warn('[REDIS]: Reconnecting...'));
 	}

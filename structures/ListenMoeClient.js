@@ -12,9 +12,6 @@ function getStream(stream) {
 		.on('error', () => process.exit(1)));
 }
 
-const database = new Database();
-const redis = new Redis();
-
 module.exports = class ListenMoeClient extends CommandoClient {
 	constructor(options) {
 		super(options);
@@ -22,11 +19,11 @@ module.exports = class ListenMoeClient extends CommandoClient {
 		this.customStream = false;
 
 		this.websocketManager = new WebsocketManager(this);
-		this.database = database.db;
-		this.redis = redis.db;
+		this.database = Database.db;
+		this.redis = Redis.db;
 
-		database.start();
-		redis.start();
+		Database.start();
+		Redis.start();
 
 		getStream(options.stream).then(res => {
 			const broadcast = this.createVoiceBroadcast();

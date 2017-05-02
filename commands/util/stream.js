@@ -24,9 +24,7 @@ module.exports = class StreamCommand extends Command {
 		return this.client.isOwner(msg.author);
 	}
 
-	run(msg, args) {
-		const { message } = args;
-
+	run(msg, { message }) {
 		if (message === 'disable' || !message) {
 			if (!this.client.customStream) return msg.say('There was no custom streaming message enabled.');
 			this.client.customStream = false;

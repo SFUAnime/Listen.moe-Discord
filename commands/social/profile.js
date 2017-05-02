@@ -35,10 +35,6 @@ module.exports = class ProfileCommand extends Command {
 		});
 	}
 
-	hasPermission(msg) {
-		return msg.channel.type !== 'dm' && msg.guild.id === '216372140046286849';
-	}
-
 	async run(msg, args) {
 		const user = args.member || msg.member;
 		const Image = Canvas.Image;

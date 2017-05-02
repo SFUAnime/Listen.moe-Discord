@@ -36,12 +36,7 @@ module.exports = class PersonalMessageCommand extends Command {
 		});
 	}
 
-	hasPermission(msg) {
-		return msg.channel.type !== 'dm' && msg.guild.id === '216372140046286849';
-	}
-
-	async run(msg, args) {
-		const { personalMessage } = args;
+	async run(msg, { personalMessage }) {
 		const profile = await UserProfile.findOne({ where: { userID: msg.author.id } });
 		if (!profile) {
 			await UserProfile.create({

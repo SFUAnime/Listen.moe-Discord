@@ -1,7 +1,7 @@
 const { oneLine } = require('common-tags');
 const winston = require('winston');
 
-const { radioChannels } = require('../config.json');
+const { RADIO_CHANNELS } = process.env;
 
 module.exports = class VoiceManager {
 	constructor(client, broadcast) {
@@ -14,7 +14,7 @@ module.exports = class VoiceManager {
 	channelPurge() {
 		for (const vc of this.client.voiceConnections.values()) {
 			const vcListeners = vc.channel.members.filter(me => !(me.user.bot || me.selfDeaf || me.deaf)).size;
-			if (vcListeners || radioChannels.includes(vc.channel.id)) continue;
+			if (vcListeners || RADIO_CHANNELS.split(',').includes(vc.channel.id)) continue;
 			winston.info(`[DISCORD][SHARD: ${this.client.shard.id}]: RUNNING CHANNEL PURGE`);
 			this.leaveVoice(vc);
 			this.client.provider.remove(vc.channel.guild.id, 'voiceChannel');
@@ -51,7 +51,7 @@ module.exports = class VoiceManager {
 		if (!voiceChannel) return;
 
 		const vcListeners = voiceChannel.members.filter(me => !(me.user.bot || me.selfDeaf || me.deaf)).size;
-		if (!vcListeners && !radioChannels.includes(voiceChannel.id)) {
+		if (!vcListeners && !RADIO_CHANNELS.split(',').includes(voiceChannel.id)) {
 			winston.info(oneLine`
 				[DISCORD][SHARD: ${this.client.shard.id}]: REMOVED VOICE CONNECTION:
 				For guild ${guild.name} (${guild.id}) DUE TO NO LISTENERS

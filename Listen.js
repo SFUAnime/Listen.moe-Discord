@@ -6,16 +6,16 @@ const path = require('path');
 const winston = require('winston');
 require('moment-duration-format');
 
-const { owner, radioChannels, stream } = require('./config');
+const { COMMAND_PREFIX, OWNERS, RADIO_CHANNELS, STREAM } = require('./config');
 const ListenMoeClient = require('./structures/ListenMoeClient');
 const SequelizeProvider = require('./providers/Sequelize');
 
 const client = new ListenMoeClient({
-	owner,
-	commandPrefix: '~~',
+	owner: OWNERS.split(','),
+	commandPrefix: COMMAND_PREFIX,
 	unknownCommandResponse: false,
 	disableEveryone: true,
-	stream
+	stream: STREAM
 });
 
 const Currency = require('./structures/currency/Currency');
@@ -62,7 +62,7 @@ client.on('error', winston.error)
 			Logged in as ${client.user.tag}
 			(${client.user.id})
 		`);
-		for (const channel of radioChannels) {
+		for (const channel of RADIO_CHANNELS.split(',')) {
 			if (!client.guilds.has(channel)) continue;
 			const voiceChannel = client.guilds.get(channel);
 			client.voiceManager.joinVoice(voiceChannel);

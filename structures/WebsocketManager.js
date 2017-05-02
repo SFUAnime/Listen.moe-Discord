@@ -1,7 +1,7 @@
 const winston = require('winston');
 const Websocket = require('ws');
 
-const { websocket } = require('../config');
+const { WEBSOCKET } = process.env;
 
 module.exports = class WebsocketManager {
 	constructor(client) {
@@ -12,7 +12,7 @@ module.exports = class WebsocketManager {
 	connect() {
 		if (this.ws) this.ws.removeAllListeners();
 		try {
-			this.ws = new Websocket(websocket);
+			this.ws = new Websocket(WEBSOCKET);
 			winston.info(`[LISTEN.MOE][SHARD: ${this.client.shard.id}]: Connection A-OK!`);
 		} catch (error) {
 			winston.error(`[LISTEN.MOE][SHARD: ${this.client.shard.id}]: Failed to connect! ${error}`);

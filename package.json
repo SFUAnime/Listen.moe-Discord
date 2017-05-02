@@ -1,6 +1,6 @@
 {
   "name": "listen.moe-discord",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "The official discord bot that streams to your server.",
   "main": "Listen.js",
   "author": {
@@ -32,9 +32,8 @@
   ],
   "homepage": "https://github.com/WeebDev/listen.moe-discord#readme",
   "dependencies": {
-    "bluebird": "^3.5.0",
     "bufferutil": "^3.0.0",
-    "canvas": "github:automattic/node-canvas",
+    "canvas": "automattic/node-canvas",
     "common-tags": "^1.4.0",
     "discord.js": "hydrabolt/discord.js#8436cbe8b164a58a1655a38198a2de0e14ed9f5e",
     "discord.js-commando": "gawdl3y/discord.js-commando",
@@ -47,18 +46,21 @@
     "redis": "^2.7.1",
     "request": "^2.81.0",
     "request-promise": "^4.2.0",
-    "sequelize": "github:sequelize/sequelize",
+    "sequelize": "3.30.4",
     "simple-youtube-api": "^2.1.0",
     "winston": "^2.3.1",
-    "ws": "^2.2.3",
-    "ytdl-core": "^0.12.1"
+    "ws": "^2.3.1",
+    "ytdl-core": "^0.13.2"
   },
   "devDependencies": {
     "eslint": "^3.19.0",
     "eslint-config-aqua": "^1.2.0"
   },
   "eslintConfig": {
-    "extends": "aqua"
+    "extends": "aqua",
+    "rules": {
+      "no-process-env": "off"
+    }
   },
   "engines": {
     "node": ">=7.6.0"

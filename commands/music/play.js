@@ -6,9 +6,8 @@ const winston = require('winston');
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
 
-const { defaultVolume, googleAPIKey, maxLength, maxSongs, passes, soundcloudID } = require('../../config');
+const { DEFAULT_VOLUME, GOOGLE_API, MAX_LENGTH, MAX_SONGS, PASSES, SOUNDCLOUD_API, USER_AGENT } = process.env;
 const Song = require('../../structures/Song');
-const { version } = require('../../package');
 
 module.exports = class PlaySongCommand extends Command {
 	constructor(client) {
@@ -33,7 +32,7 @@ module.exports = class PlaySongCommand extends Command {
 		});
 
 		this.queue = new Map();
-		this.youtube = new YouTube(googleAPIKey);
+		this.youtube = new YouTube(GOOGLE_API);
 	}
 
 	hasPermission(msg) {
@@ -66,8 +65,8 @@ module.exports = class PlaySongCommand extends Command {
 		if (url.match(/^https?:\/\/(soundcloud.com|snd.sc)\/(.*)$/)) {
 			try {
 				const video = await request({
-					uri: `http://api.soundcloud.com/resolve.json?url=${url}&client_id=${soundcloudID}`,
-					headers: { 'User-Agent': `Commando v${version} (https://github.com/WeebDev/Commando/)` },
+					uri: `http://api.soundcloud.com/resolve.json?url=${url}&client_id=${SOUNDCLOUD_API}`,
+					headers: { 'User-Agent': USER_AGENT },
 					json: true
 				});
 
@@ -115,7 +114,7 @@ module.exports = class PlaySongCommand extends Command {
 				voiceChannel: voiceChannel,
 				connection: null,
 				songs: [],
-				volume: this.client.provider.get(msg.guild.id, 'defaultVolume', defaultVolume)
+				volume: this.client.provider.get(msg.guild.id, 'defaultVolume', DEFAULT_VOLUME)
 			};
 			this.queue.set(msg.guild.id, queue);
 
@@ -183,7 +182,7 @@ module.exports = class PlaySongCommand extends Command {
 					voiceChannel: voiceChannel,
 					connection: null,
 					songs: [],
-					volume: this.client.provider.get(msg.guild.id, 'defaultVolume', defaultVolume)
+					volume: this.client.provider.get(msg.guild.id, 'defaultVolume', DEFAULT_VOLUME)
 				};
 				this.queue.set(msg.guild.id, queue);
 
@@ -227,7 +226,7 @@ module.exports = class PlaySongCommand extends Command {
 		const queue = this.queue.get(msg.guild.id);
 
 		if (!this.client.isOwner(msg.author)) {
-			const songMaxLength = this.client.provider.get(msg.guild.id, 'maxLength', maxLength);
+			const songMaxLength = this.client.provider.get(msg.guild.id, 'maxLength', MAX_LENGTH);
 			if (songMaxLength > 0 && video.durationSeconds > songMaxLength * 60) {
 				return oneLine`
 					👎 ${escapeMarkdown(video.title)}
@@ -238,7 +237,7 @@ module.exports = class PlaySongCommand extends Command {
 			if (queue.songs.some(song => song.id === video.id)) {
 				return `👎 ${escapeMarkdown(video.title)} is already queued.`;
 			}
-			const songMaxSongs = this.client.provider.get(msg.guild.id, 'maxSongs', maxSongs);
+			const songMaxSongs = this.client.provider.get(msg.guild.id, 'maxSongs', MAX_SONGS);
 			if (songMaxSongs > 0
 				&& queue.songs.reduce((prev, song) => prev + song.member.id === msg.author.id, 0)
 				>= songMaxSongs) {
@@ -291,7 +290,7 @@ module.exports = class PlaySongCommand extends Command {
 		if (song.url.match(/^https?:\/\/(api.soundcloud.com)\/(.*)$/)) {
 			stream = request({
 				uri: song.url,
-				headers: { 'User-Agent': `Commando v${version} (https://github.com/WeebDev/Commando/)` },
+				headers: { 'User-Agent': USER_AGENT },
 				followAllRedirects: true
 			});
 		} else {
@@ -304,7 +303,7 @@ module.exports = class PlaySongCommand extends Command {
 					this.play(guild, queue.songs[0]);
 				});
 		}
-		const dispatcher = queue.connection.playStream(stream, { passes })
+		const dispatcher = queue.connection.playStream(stream, { passes: PASSES })
 			.on('end', () => {
 				if (streamErrored) return;
 				queue.songs.shift();

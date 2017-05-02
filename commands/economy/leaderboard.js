@@ -5,7 +5,7 @@ const Sequelize = require('sequelize');
 
 const Currency = require('../../structures/currency/Currency');
 const UserProfile = require('../../models/UserProfile');
-const { paginationItems } = require('../../config');
+const { PAGINATED_ITEMS } = process.env;
 
 module.exports = class MoneyLeaderboardCommand extends Command {
 	constructor(client) {
@@ -41,14 +41,13 @@ module.exports = class MoneyLeaderboardCommand extends Command {
 		});
 	}
 
-	async run(msg, args) {
-		const { page } = args;
+	async run(msg, { page }) {
 		const lastUpdate = await this.client.redis.getAsync('moneyleaderboardreset');
 		const cooldown = 30 * 60 * 1000;
 		const reset = cooldown - (Date.now() - lastUpdate);
 		const money = await this.findCached();
-		const paginated = util.paginate(JSON.parse(money), page, Math.floor(paginationItems));
-		let ranking = paginationItems * (paginated.page - 1);
+		const paginated = util.paginate(JSON.parse(money), page, Math.floor(PAGINATED_ITEMS));
+		let ranking = PAGINATED_ITEMS * (paginated.page - 1);
 
 		for (const user of paginated.items) await this.client.fetchUser(user.userID); // eslint-disable-line
 
