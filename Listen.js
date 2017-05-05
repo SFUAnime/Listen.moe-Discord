@@ -1,5 +1,3 @@
-global.Promise = require('bluebird');
-
 const { FriendlyError } = require('discord.js-commando');
 const { oneLine, stripIndents } = require('common-tags');
 const path = require('path');
