@@ -26,7 +26,7 @@ module.exports = class NowPlayingCommand extends Command {
 
 		const { radioInfo } = this.client;
 
-		const nowplaying = `${radioInfo.artist_name ? `${radioInfo.artistName} - ` : ''}${radioInfo.songName}`;
+		const nowplaying = `${radioInfo.artistName ? `${radioInfo.artistName} - ` : ''}${radioInfo.songName}`;
 		const anime = radioInfo.animeName ? `Anime: ${radioInfo.animeName}` : '';
 		const requestedBy = radioInfo.requestedBy
 			? /\s/g.test(radioInfo.requestedBy)
