@@ -26,12 +26,12 @@ module.exports = class NowPlayingCommand extends Command {
 
 		const { radioInfo } = this.client;
 
-		const nowplaying = `${radioInfo.artist_name ? `${radioInfo.artist_name} - ` : ''}${radioInfo.song_name}`;
-		const anime = radioInfo.anime_name ? `Anime: ${radioInfo.anime_name}` : '';
-		const requestedBy = radioInfo.requested_by
-			? /\s/g.test(radioInfo.requested_by)
-				? `🎉 **${Util.escapeMarkdown(radioInfo.requested_by)}** 🎉`
-			: `Requested by: [${Util.escapeMarkdown(radioInfo.requested_by)}](https://forum.listen.moe/u/${radioInfo.requested_by})` // eslint-disable-line max-len
+		const nowplaying = `${radioInfo.artist_name ? `${radioInfo.artistName} - ` : ''}${radioInfo.songName}`;
+		const anime = radioInfo.animeName ? `Anime: ${radioInfo.animeName}` : '';
+		const requestedBy = radioInfo.requestedBy
+			? /\s/g.test(radioInfo.requestedBy)
+				? `🎉 **${Util.escapeMarkdown(radioInfo.requestedBy)}** 🎉`
+			: `Requested by: [${Util.escapeMarkdown(radioInfo.requestedBy)}](https://forum.listen.moe/u/${radioInfo.requestedBy})` // eslint-disable-line max-len
 			: '';
 		const song = `${Util.escapeMarkdown(nowplaying)}\n\n${Util.escapeMarkdown(anime)}\n${requestedBy}`;
 
