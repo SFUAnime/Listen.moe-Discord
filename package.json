@@ -35,7 +35,7 @@
     "bufferutil": "^3.0.0",
     "canvas": "automattic/node-canvas",
     "common-tags": "^1.4.0",
-    "discord.js": "hydrabolt/discord.js#8436cbe8b164a58a1655a38198a2de0e14ed9f5e",
+    "discord.js": "hydrabolt/discord.js#11.1-dev",
     "discord.js-commando": "gawdl3y/discord.js-commando",
     "erlpack": "hammerandchisel/erlpack",
     "moment": "^2.18.1",
