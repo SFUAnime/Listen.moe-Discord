@@ -1,5 +1,6 @@
 const { Command } = require('discord.js-commando');
 const { oneLine } = require('common-tags');
+const { Util } = require('discord.js');
 
 module.exports = class NowPlayingCommand extends Command {
 	constructor(client) {
@@ -25,14 +26,14 @@ module.exports = class NowPlayingCommand extends Command {
 
 		const { radioInfo } = this.client;
 
-		const nowplaying = `${radioInfo.artistName ? `${radioInfo.artistName} - ` : ''}${radioInfo.songName}`;
-		const anime = radioInfo.animeName ? `Anime: ${radioInfo.animeName}` : '';
-		const requestedBy = radioInfo.requestedBy
-			? /\s/g.test(radioInfo.requestedBy)
-				? `🎉 **${radioInfo.requestedBy}** 🎉`
-			: `Requested by: [${radioInfo.requestedBy}](https://forum.listen.moe/u/${radioInfo.requestedBy})`
+		const nowplaying = `${radioInfo.artist_name ? `${radioInfo.artist_name} - ` : ''}${radioInfo.song_name}`;
+		const anime = radioInfo.anime_name ? `Anime: ${radioInfo.anime_name}` : '';
+		const requestedBy = radioInfo.requested_by
+			? /\s/g.test(radioInfo.requested_by)
+				? `🎉 **${Util.escapeMarkdown(radioInfo.requested_by)}** 🎉`
+			: `Requested by: [${Util.escapeMarkdown(radioInfo.requested_by)}](https://forum.listen.moe/u/${radioInfo.requested_by})` // eslint-disable-line max-len
 			: '';
-		const song = `${nowplaying}\n\n${anime}\n${requestedBy}`;
+		const song = `${Util.escapeMarkdown(nowplaying)}\n\n${Util.escapeMarkdown(anime)}\n${requestedBy}`;
 
 		return msg.channel.sendEmbed({
 			color: 15473237,
