@@ -1,6 +1,6 @@
 const { Command } = require('discord.js-commando');
 const { oneLine } = require('common-tags');
-const { Util } = require('discord.js')
+const { Util } = require('discord.js');
 
 module.exports = class NowPlayingCommand extends Command {
 	constructor(client) {
@@ -31,8 +31,8 @@ module.exports = class NowPlayingCommand extends Command {
 		const requestedBy = radioInfo.requested_by
 			? /\s/g.test(radioInfo.requested_by)
 				? `🎉 **${Util.escapeMarkdown(radioInfo.requested_by)}** 🎉`
-			: `Requested by: [${Util.escapeMarkdown(radioInfo.requested_by)}](https://forum.listen.moe/u/${radioInfo.requested_by})`
-			: ''; //the markdown for requested by needs to be escaped carefully to avoid escaping out the special event ** markdown
+			: `Requested by: [${Util.escapeMarkdown(radioInfo.requested_by)}](https://forum.listen.moe/u/${radioInfo.requested_by})` // eslint-disable-line max-len
+			: '';
 		const song = `${Util.escapeMarkdown(nowplaying)}\n\n${Util.escapeMarkdown(anime)}\n${requestedBy}`;
 
 		return msg.channel.sendEmbed({
