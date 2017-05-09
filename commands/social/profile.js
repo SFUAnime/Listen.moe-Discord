@@ -1,7 +1,7 @@
 const Canvas = require('canvas');
 const { Command } = require('discord.js-commando');
-
-const fs = global.Promise.promisifyAll(require('fs'));
+const { promisifyAll } = require('tsubaki');
+const fs = promisifyAll(require('fs'));
 const path = require('path');
 const request = require('request-promise');
 
