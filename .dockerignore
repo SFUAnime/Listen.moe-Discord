@@ -1,11 +1,29 @@
-.git/
-.vscode/
-node_modules/
-deploy/
-.dockerignore
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# IDE
+.vscode
+
+# Git
+.git
 .gitattributes
 .gitignore
+
+# Deployment
+deploy/
 .travis.yml
+
+# Dependency directory
+node_modules
+
+# Docker
 docker-compose.yml
 docker-compose.yml.example
 docker.sh
