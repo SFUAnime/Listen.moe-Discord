@@ -1,0 +1,11 @@
+.git/
+.vscode/
+deploy/
+.dockerignore
+.gitattributes
+.gitignore
+.travis.yml
+docker-compose.yml
+docker-compose.yml.example
+docker.sh
+Dockerfile
