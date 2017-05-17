@@ -1,20 +1,24 @@
-FROM ubuntu:zesty
+FROM node:7-alpine
 
-RUN apt update
-RUN apt upgrade -y
-RUN apt install -y curl
-RUN curl -sL https://deb.nodesource.com/setup_7.x | bash
-RUN apt update
-RUN apt install -y build-essential ffmpeg git python nodejs
-RUN apt install -y libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev g++
-RUN apt autoremove -y
+LABEL maintainer "iCrawl <icrawltogo@gmail.com>"
 
-RUN mkdir -p /usr/src/Listen.moe
+#  Install dependencies
+RUN apk add --update \
+&& apk add --no-cache ffmpeg opus pixman cairo pango giflib ca-certificates \
+&& apk add --no-cache --virtual .build-deps git curl pixman-dev cairo-dev pangomm-dev libjpeg-turbo-dev giflib-dev python g++ make \
+\
+# Clean up build dependencies
+&& apk del .build-deps
+
+# Add package.json for Yarn
 WORKDIR /usr/src/Listen.moe
+COPY package.json yarn.lock ./
 
+# Install node.js dependencies
+RUN yarn install 
+
+# Add project source
 COPY . .
-
-RUN npm install
 
 ENV TOKEN= \
 	COMMAND_PREFIX= \
@@ -32,4 +36,4 @@ ENV TOKEN= \
 	MAX_SONGS= \
 	PASSES=
 
-CMD node sharder.js
+CMD ["node", "sharder.js"]
