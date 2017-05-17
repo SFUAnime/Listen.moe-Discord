@@ -17,7 +17,7 @@ pids
 .gitignore
 
 # Deployment
-deploy/
+deploy
 .travis.yml
 
 # Dependency directory
