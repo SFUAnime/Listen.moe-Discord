@@ -3,13 +3,12 @@ services:
   listenmoe:
     image: "crawl/listenmoe:latest"
     restart: always
-    container_name: listenmoe
     environment:
       - TOKEN=BOT_TOKEN
       - COMMAND_PREFIX=-
       - OWNERS=OWNER_IDS,CAN,BE,SEPERATED,BY,COMMAS
       - DB=postgres://POSTGRES_USER_DEFINED_IN_POSTGRES_ENV:POSTGRES_PW_DEFINED_IN_POSTGRES_ENV@postgres:5432/POSTGRES_DB_EITHER_USER_DEFINED_IN_POSTGRES_ENV_OR_POSTGRES_DB_DEFINED_IN_POSTGRES
-      - REDIS=REDIS_HOSTNAME
+      - REDIS=redis
       - RADIO_CHANNEL=CHANNELS_THE_BOT_SHOULD_ALWAYS_JOIN_AND_NEVER_LEAVE
       - GOOGLE_API=GOOGLE_API_KEY_FOR_YOUTUBE_AND_GEOCODE
       - SOUNDCLOUD_API=SOUNDCLOUD_API_KEY
@@ -18,17 +17,39 @@ services:
       - MAX_LENGTH=MAXIMUM_LENGTH_PER_SONG
       - MAX_SONGS=HOW_MANY_SONGS_A_USER_CAN_QUEUE_UP
       - PASSES=UPD_PACKET_PASS
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      backend:
+        aliases:
+          - listenmoe
+
   postgres:
-    image: "postgres:9"
-    container_name: listenmoe_db
+    image: "postgres:9-alpine"
     environment:
       - POSTGRES_USER=listenmoe
       - POSTGRES_PASSWORD=POSTGRES_PW
-      - PGDATA=PATH_TO_DIRECTORY_THAT_SAVES_DATA_ON_THE_SYSTEM
     volumes:
-      - LOCALHOST_VOLUME_PATH:PATH_DEFINED_IN_PGDATA
+      - LOCALHOST_VOLUME_PATH/pg:/var/lib/postgresql/data
+    networks:
+      backend:
+        aliases:
+          - postgres
+
   redis:
-    image: "redis:3"
-    container_name: listenmoe_redis
+    image: "redis:3-alpine"
     volumes:
-      - LOCALHOST_VOLUME_PATH:/data
+      - LOCALHOST_VOLUME_PATH/redis:/data
+    networks:
+      backend:
+        aliases:
+          - redis
+
+networks:
+  backend:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.1.0/24
