@@ -1,10 +1,10 @@
 FROM node:7-alpine
 
-MAINTAINER iCrawl <icrawltogo@gmail.com>
+LABEL maintainer "iCrawl <icrawltogo@gmail.com>"
 
-# Add project source
+# Add package.json for Yarn
 WORKDIR /usr/src/Listen.moe
-COPY . .
+COPY package.json .
 
 #  Install dependencies
 RUN apk add --update \
@@ -16,6 +16,9 @@ RUN apk add --update \
 \
 # Clean up build dependencies
 && apk del .build-deps
+
+# Add project source
+COPY . .
 
 ENV TOKEN= \
 	COMMAND_PREFIX= \

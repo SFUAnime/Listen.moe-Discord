@@ -20,10 +20,6 @@ services:
     depends_on:
       - postgres
       - redis
-    networks:
-      backend:
-        aliases:
-          - listenmoe
 
   postgres:
     image: "postgres:9-alpine"
@@ -32,24 +28,8 @@ services:
       - POSTGRES_PASSWORD=POSTGRES_PW
     volumes:
       - LOCALHOST_VOLUME_PATH/pg:/var/lib/postgresql/data
-    networks:
-      backend:
-        aliases:
-          - postgres
 
   redis:
     image: "redis:3-alpine"
     volumes:
       - LOCALHOST_VOLUME_PATH/redis:/data
-    networks:
-      backend:
-        aliases:
-          - redis
-
-networks:
-  backend:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.16.1.0/24
