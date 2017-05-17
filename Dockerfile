@@ -4,7 +4,7 @@ LABEL maintainer "iCrawl <icrawltogo@gmail.com>"
 
 # Add package.json for Yarn
 WORKDIR /usr/src/Listen.moe
-COPY package.json .
+COPY package.json yarn.lock ./
 
 #  Install dependencies
 RUN apk add --update \
