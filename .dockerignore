@@ -24,6 +24,7 @@ deploy
 node_modules
 
 # Docker
+.dockerignore
 docker-compose.yml
 docker-compose.yml.example
 docker.sh
