@@ -1,18 +1,18 @@
-FROM node:7-alpine
+FROM alpine:3.6
 
 LABEL maintainer "iCrawl <icrawltogo@gmail.com>"
-
-#  Install dependencies
-RUN apk add --update \
-&& apk add --no-cache ffmpeg opus pixman cairo pango giflib ca-certificates \
-&& apk add --no-cache --virtual .build-deps git curl pixman-dev cairo-dev pangomm-dev libjpeg-turbo-dev giflib-dev python g++ make
 
 # Add package.json for Yarn
 WORKDIR /usr/src/Listen.moe
 COPY package.json yarn.lock ./
 
+#  Install dependencies
+RUN apk add --update \
+&& apk add --no-cache ffmpeg opus pixman cairo pango giflib ca-certificates nodejs-current yarn \
+&& apk add --no-cache --virtual .build-deps git curl pixman-dev cairo-dev pangomm-dev libjpeg-turbo-dev giflib-dev python g++ make \
+\
 # Install node.js dependencies
-RUN yarn install \
+&& yarn install \
 \
 # Clean up build dependencies
 && apk del .build-deps
